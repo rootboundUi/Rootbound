@@ -35,7 +35,10 @@
           ".menu-item {white-space: nowrap;}",
           ".header__logo {position: absolute; left: 50%; transform: translateX(-50%);}"
         ],
-        "settings": {}
+        "settings": {
+          "logo": "shopify://shop_images/root.png",
+          "logo_width": 180
+        }
       },
       "footer": {
         "type": "footer",
