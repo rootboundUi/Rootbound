@@ -34,7 +34,7 @@
           ".menu-list {display: flex; gap: 2rem; align-items: center; list-style: none; margin: 0; padding: 0;}",
           ".menu-item {white-space: nowrap;}",
           ".header__logo {position: absolute; left: 50%; transform: translateX(-50%);}",
-          ".header {box-shadow: 0 4px 20px rgba(120, 90, 40, 0.05);}"
+          ".header {background: linear-gradient( to right, #ffe5d4 0%, #fff1e8 35%, #ffffff 50%, #fff1e8 65%, #ffe5d4 100% );}"
         ],
         "settings": {
           "logo": "shopify://shop_images/root.png",
