@@ -306,17 +306,22 @@
   transform: translateX(-50%);
 }
 .header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+
   background: linear-gradient(
-    to right,
-    #ffe5d4 0%,
-    #fff1e8 35%,
-    #ffffff 50%,
-    #fff1e8 65%,
-    #ffe5d4 100%
+    120deg,
+    #ffe5d4,
+    #fff1e8,
+    #ffffff,
+    #fff1e8,
+    #ffe5d4
   );
-}
-.header {
-  box-shadow: 0 4px 25px rgba(255, 170, 140, 0.15);
+
+  background-size: 200% 200%;
+  animation: peachFlow 12s ease-in-out infinite;
 }
 
 
