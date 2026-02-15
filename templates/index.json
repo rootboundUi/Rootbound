@@ -44,6 +44,30 @@
     "testimonials": {
       "type": "testimonials",
       "blocks": {
+        "testimonial_4NaFUL": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "",
+            "author": "",
+            "location": ""
+          }
+        },
+        "testimonial_Nhj9N9": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "",
+            "author": "",
+            "location": ""
+          }
+        },
+        "testimonial_YwMehC": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "",
+            "author": "",
+            "location": ""
+          }
+        },
         "testimonial_z6nLwL": {
           "type": "testimonial",
           "settings": {
@@ -54,6 +78,9 @@
         }
       },
       "block_order": [
+        "testimonial_4NaFUL",
+        "testimonial_Nhj9N9",
+        "testimonial_YwMehC",
         "testimonial_z6nLwL"
       ],
       "settings": {
