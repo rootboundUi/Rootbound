@@ -28,10 +28,14 @@
     "sections": {
       "header": {
         "type": "header",
-        "settings": {
-          "logo": "shopify://shop_images/WhatsApp_Image_2026-02-15_at_8.46.04_PM.jpg",
-          "logo_width": 300
-        }
+        "custom_css": [
+          ".header__container {display: flex; align-items: center; justify-content: space-between; position: relative; max-width: 1440px; margin: 0 auto; padding: 0 1.5rem; height: 70px;}",
+          ".header__menu {flex: 1;}",
+          ".menu-list {display: flex; gap: 2rem; align-items: center; list-style: none; margin: 0; padding: 0;}",
+          ".menu-item {white-space: nowrap;}",
+          ".header__logo {position: absolute; left: 50%; transform: translateX(-50%);}"
+        ],
+        "settings": {}
       },
       "footer": {
         "type": "footer",
