@@ -1,25 +1,42 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
       "settings": {
+        "image": "shopify://shop_images/hero-lifestyle.jpg",
         "title": "Wear Your Authentic Self",
         "subtitle": "Contemporary streetwear for the authentic individual",
         "cta_text": "Explore Collection",
-        "cta_link": "/collections/all"
+        "cta_link": "/collections/all",
+        "text_alignment": "center",
+        "height": 500
       }
     },
     "featured_products": {
       "type": "featured-products",
       "settings": {
         "title": "Featured This Season",
-        "subtitle": "Hand-picked essentials that define contemporary style"
+        "subtitle": "Hand-picked essentials that define contemporary style",
+        "collection": "automated-collection",
+        "products_count": 4,
+        "show_view_all": true
       }
     },
     "featured_collections": {
       "type": "featured-collections",
       "settings": {
-        "title": "Our Collections"
+        "title": "Our Collections",
+        "description": "",
+        "show_all_collections": true
       }
     },
     "testimonials": {
@@ -32,9 +49,16 @@
     "gallery": {
       "type": "image-gallery",
       "settings": {
-        "title": "From the Community"
+        "title": "From the Community",
+        "columns": "3"
       }
     }
   },
-  "order": ["hero", "featured_products", "featured_collections", "testimonials", "gallery"]
+  "order": [
+    "hero",
+    "featured_products",
+    "featured_collections",
+    "testimonials",
+    "gallery"
+  ]
 }
