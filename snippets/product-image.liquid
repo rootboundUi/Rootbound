@@ -1,0 +1,10 @@
+<!-- Product image with loading optimization -->
+{% if image %}
+  <img 
+    src="{{ image | image_url: width: 500 }}"
+    alt="{{ image.alt | escape }}"
+    loading="lazy"
+    width="{{ image.width }}"
+    height="{{ image.height }}"
+  >
+{% endif %}

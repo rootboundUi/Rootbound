@@ -1,0 +1,11 @@
+{
+  "theme": {
+    "name": "Rootbound Premium",
+    "id": 0,
+    "role": "main",
+    "theme_store_id": null,
+    "presets": {
+      "Default": {}
+    }
+  }
+}

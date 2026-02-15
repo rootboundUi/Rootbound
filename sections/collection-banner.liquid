@@ -1,0 +1,50 @@
+<section class="collection-banner">
+  <div class="banner__container">
+    <h1 class="banner__title">{{ collection.title }}</h1>
+    <p class="banner__description">{{ collection.description | strip_html }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Banner",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f5f5f5"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.collection-banner {
+  background: var(--bg_color);
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.banner__container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.banner__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  font-family: 'Playfair Display', serif;
+  color: var(--color-text);
+}
+
+.banner__description {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>

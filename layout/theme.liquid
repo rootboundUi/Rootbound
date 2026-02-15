@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}" dir="{% render 'direction' %}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+  
+  <title>
+    {%- if page_title != blank -%}
+      {{ page_title }} | {{ shop.name }}
+    {%- else -%}
+      {{ shop.name }}
+    {%- endif -%}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  <link rel="canonical" href="{{ canonical_url }}">
+  
+  {% if settings.favicon != blank %}
+    <link rel="icon" type="image/svg+xml" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {% endif %}
+
+  <!-- CSS -->
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- Shopify -->
+  {{ content_for_header }}
+  
+  {% unless settings.predictive_search_enabled == false %}
+    <link rel="stylesheet" href="{{ 'predictive-search.css' | asset_url }}">
+  {% endunless %}
+
+  <style>
+    :root {
+      --color-primary: {{ settings.color_primary }};
+      --color-secondary: {{ settings.color_secondary }};
+      --color-accent: {{ settings.color_accent }};
+      --color-text: {{ settings.color_text }};
+      --color-light-bg: {{ settings.color_light_bg }};
+    }
+  </style>
+</head>
+
+<body class="template-{{ request.page_type }}{{ ' is-mobile' if request.user_agent contains 'Mobile' }}">
+  
+  {% section 'header' %}
+
+  <main id="MainContent" class="main-content">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+
+  {% unless settings.predictive_search_enabled == false %}
+    <script src="{{ 'predictive-search.js' | asset_url }}" defer></script>
+  {% endunless %}
+
+</body>
+</html>

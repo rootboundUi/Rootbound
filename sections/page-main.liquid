@@ -1,0 +1,77 @@
+<section class="page-main">
+  <div class="page__container">
+    <h1 class="page__title">{{ page.title }}</h1>
+    <div class="page__content">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page Main"
+}
+{% endschema %}
+
+<style>
+.page-main {
+  padding: 3rem 1.5rem;
+}
+
+.page__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 2rem 0;
+  font-family: 'Playfair Display', serif;
+  color: var(--color-text);
+}
+
+.page__content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #666;
+}
+
+.page__content h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 2rem 0 1rem 0;
+  color: var(--color-text);
+}
+
+.page__content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.75rem 0;
+  color: var(--color-text);
+}
+
+.page__content p {
+  margin: 0 0 1rem 0;
+}
+
+.page__content ul,
+.page__content ol {
+  margin: 1rem 0;
+  padding-left: 2rem;
+}
+
+.page__content li {
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .page-main {
+    padding: 1.5rem 1.5rem;
+  }
+
+  .page__title {
+    font-size: 1.5rem;
+  }
+}
+</style>

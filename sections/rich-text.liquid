@@ -1,0 +1,122 @@
+<section class="rich-text">
+  <div class="rich-text__container">
+    <div class="rich-text__content">
+      <div class="rich-text__text">
+        {{ section.settings.content }}
+      </div>
+
+      {% if section.settings.button_text != blank %}
+        <a href="{{ section.settings.button_link }}" class="button button--primary">
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+
+    {% if section.settings.image %}
+      <div class="rich-text__image">
+        <img 
+          src="{{ section.settings.image | image_url: width: 600 }}"
+          alt="{{ section.settings.image.alt | escape }}"
+        >
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich Text",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "left", "label": "Image Left" },
+        { "value": "right", "label": "Image Right" }
+      ],
+      "default": "right"
+    }
+  ],
+  "presets": [
+    { "name": "Rich Text" }
+  ]
+}
+{% endschema %}
+
+<style>
+.rich-text {
+  padding: 4rem 1.5rem;
+  background: #fff;
+}
+
+.rich-text__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.rich-text__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.rich-text__content h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+}
+
+.rich-text__content p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #666;
+}
+
+.rich-text__image img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+@media (max-width: 1024px) {
+  .rich-text__container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .rich-text {
+    padding: 2rem 1.5rem;
+  }
+
+  .rich-text__content h2 {
+    font-size: 1.5rem;
+  }
+}
+</style>

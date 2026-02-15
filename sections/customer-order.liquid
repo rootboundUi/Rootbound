@@ -1,0 +1,173 @@
+<section class="customer-order">
+  <div class="order__container">
+    <div class="order__header">
+      <h1 class="order__title">Order #{{ order.order_number }}</h1>
+      <p class="order__date">{{ order.created_at | date: "%B %d, %Y" }}</p>
+    </div>
+
+    <!-- Order Status -->
+    <div class="order-status">
+      <div class="status-badge badge--{{ order.fulfillment_status | default: 'pending' }}">
+        {{ order.financial_status }}
+      </div>
+    </div>
+
+    <!-- Order Items -->
+    <section class="order-items">
+      <h2 class="section-title">Order Items</h2>
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in order.line_items %}
+            <tr>
+              <td>{{ item.title }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.price | money }}</td>
+              <td>{{ item.final_line_price | money }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Totals -->
+    <section class="order-totals">
+      <div class="total-row">
+        <span>Subtotal</span>
+        <span>{{ order.subtotal_price | money }}</span>
+      </div>
+      <div class="total-row">
+        <span>Shipping</span>
+        <span>{{ order.shipping_price | money }}</span>
+      </div>
+      <div class="total-row">
+        <span>Tax</span>
+        <span>{{ order.tax_price | money }}</span>
+      </div>
+      <div class="total-row final">
+        <span>Total</span>
+        <span>{{ order.total_price | money }}</span>
+      </div>
+    </section>
+
+    <!-- Shipping Address -->
+    <section class="order-address">
+      <h2 class="section-title">Shipping Address</h2>
+      <address>
+        {{ order.shipping_address.first_name }} {{ order.shipping_address.last_name }}<br>
+        {{ order.shipping_address.street }}<br>
+        {{ order.shipping_address.city }}, {{ order.shipping_address.province }} {{ order.shipping_address.zip }}<br>
+        {{ order.shipping_address.country }}
+      </address>
+    </section>
+
+    <a href="{{ routes.account_url }}" class="button button--secondary">Back to Account</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Order"
+}
+{% endschema %}
+
+<style>
+.customer-order {
+  padding: 2rem 1.5rem;
+  background: #f9f9f9;
+  min-height: calc(100vh - 300px);
+}
+
+.order__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.order__header {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.order__title {
+  font-size: 2rem;
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+}
+
+.order__date {
+  color: #999;
+  margin: 0.5rem 0 0 0;
+}
+
+.order-status {
+  margin-bottom: 1.5rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+}
+
+.order-items,
+.order-totals,
+.order-address {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.items-table th {
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 2px solid #eee;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+.items-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+}
+
+.total-row.final {
+  border-top: 2px solid #eee;
+  border-bottom: 2px solid #eee;
+  padding: 1rem 0;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+address {
+  font-style: normal;
+  line-height: 1.8;
+}
+</style>

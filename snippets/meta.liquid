@@ -1,0 +1,62 @@
+<!-- Meta Tags for SEO -->
+<meta property="og:type" content="{% if product %}product{% elsif collection %}website{% else %}website{% endif %}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ page_title | escape }}">
+<meta property="og:description" content="{{ page_description | escape }}">
+
+{% if product %}
+  <meta property="og:image" content="{{ product.featured_image | image_url: width: 1200 }}">
+  <meta property="product:price:amount" content="{{ product.price | divided_by: 100 }}">
+  <meta property="product:price:currency" content="{{ shop.currency }}">
+  <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
+{% elsif collection %}
+  <meta property="og:image" content="{{ collection.image | image_url: width: 1200 }}">
+{% else %}
+  <meta property="og:image" content="{{ shop.brand.logo | image_url: width: 1200 }}">
+{% endif %}
+
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:title" content="{{ page_title | escape }}">
+<meta property="twitter:description" content="{{ page_description | escape }}">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "{{ shop.name }}",
+      "url": "{{ shop.url }}",
+      "logo": "{{ shop.brand.logo | image_url: width: 400 }}",
+      "sameAs": [
+        "{{ settings.social_facebook }}",
+        "{{ settings.social_instagram }}",
+        "{{ settings.social_twitter }}"
+      ]
+    }
+  ]
+}
+</script>
+
+{% if product %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "{{ product.title }}",
+    "image": "{{ product.featured_image | image_url: width: 1200 }}",
+    "description": "{{ product.description | strip_html | escape }}",
+    "brand": {
+      "@type": "Brand",
+      "name": "{{ product.vendor }}"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "{{ product.price | divided_by: 100 }}",
+      "priceCurrency": "{{ shop.currency }}",
+      "availability": "{% if product.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+      "url": "{{ product.url }}"
+    }
+  }
+  </script>
+{% endif %}

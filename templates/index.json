@@ -1,0 +1,40 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "title": "Wear Your Authentic Self",
+        "subtitle": "Contemporary streetwear for the authentic individual",
+        "cta_text": "Explore Collection",
+        "cta_link": "/collections/all"
+      }
+    },
+    "featured_products": {
+      "type": "featured-products",
+      "settings": {
+        "title": "Featured This Season",
+        "subtitle": "Hand-picked essentials that define contemporary style"
+      }
+    },
+    "featured_collections": {
+      "type": "featured-collections",
+      "settings": {
+        "title": "Our Collections"
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "title": "Customer Love",
+        "subtitle": "What our community says"
+      }
+    },
+    "gallery": {
+      "type": "image-gallery",
+      "settings": {
+        "title": "From the Community"
+      }
+    }
+  },
+  "order": ["hero", "featured_products", "featured_collections", "testimonials", "gallery"]
+}

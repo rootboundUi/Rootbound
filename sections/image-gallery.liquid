@@ -1,0 +1,146 @@
+<section class="image-gallery">
+  <div class="gallery-container">
+    <h2 class="gallery__title">{{ section.settings.title }}</h2>
+    
+    <div class="gallery__grid">
+      {% for block in section.blocks %}
+        {% if block.settings.image %}
+          <div class="gallery__item">
+            <img 
+              src="{{ block.settings.image | image_url: width: 500 }}"
+              alt="{{ block.settings.image.alt | escape }}"
+              loading="lazy"
+            >
+            {% if block.settings.caption %}
+              <div class="gallery__caption">{{ block.settings.caption }}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image Gallery",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Gallery Title",
+      "default": "Gallery"
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Gallery",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.image-gallery {
+  padding: 4rem 1.5rem;
+  background: #f9f9f9;
+}
+
+.gallery-container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.gallery__title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 3rem 0;
+  font-family: 'Playfair Display', serif;
+}
+
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat({{ section.settings.columns }}, 1fr);
+  gap: 1.5rem;
+}
+
+.gallery__item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  aspect-ratio: 1;
+}
+
+.gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery__item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  color: #fff;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery__item:hover .gallery__caption {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .image-gallery {
+    padding: 2rem 1.5rem;
+  }
+}
+</style>

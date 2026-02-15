@@ -1,0 +1,496 @@
+<section class="product-main">
+  <div class="product-main__container">
+    <!-- Gallery -->
+    <div class="product-gallery">
+      <div class="product-gallery__main">
+        {% if product.featured_image %}
+          <img 
+            src="{{ product.featured_image | image_url: width: 800 }}"
+            alt="{{ product.featured_image.alt | escape }}"
+            id="main-image"
+            class="product-gallery__image"
+          >
+        {% endif %}
+      </div>
+
+      {% if product.images.size > 1 %}
+        <div class="product-gallery__thumbnails">
+          {% for image in product.images limit: 4 %}
+            <button 
+              class="thumbnail" 
+              onclick="document.getElementById('main-image').src='{{ image | image_url: width: 800 }}'"
+            >
+              <img 
+                src="{{ image | image_url: width: 150 }}"
+                alt="{{ image.alt | escape }}"
+              >
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Product Info -->
+    <div class="product-info">
+      <div class="breadcrumb">
+        <a href="/">Home</a> / 
+        <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a> / 
+        <span>{{ product.title }}</span>
+      </div>
+
+      <div class="product-header">
+        <h1 class="product-title">{{ product.title }}</h1>
+        <p class="product-vendor">by {{ product.vendor }}</p>
+      </div>
+
+      <!-- Rating -->
+      {% if product.metafields.reviews.rating %}
+        <div class="product-rating">
+          <div class="stars" data-rating="{{ product.metafields.reviews.rating.value }}">
+            {% for i in (1..5) %}
+              <span class="star">★</span>
+            {% endfor %}
+          </div>
+          <span class="rating-count">({{ product.metafields.reviews.rating_count.value | default: 0 }} reviews)</span>
+        </div>
+      {% endif %}
+
+      <!-- Price -->
+      <div class="product-pricing">
+        {% if product.compare_at_price > product.price %}
+          <span class="original-price">{{ product.compare_at_price | money }}</span>
+        {% endif %}
+        <span class="current-price">{{ product.price | money }}</span>
+        {% if product.compare_at_price > product.price %}
+          <span class="discount">-{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%</span>
+        {% endif %}
+      </div>
+
+      <!-- Description -->
+      <div class="product-description">
+        {{ product.description }}
+      </div>
+
+      <!-- Form -->
+      <form action="/cart/add" method="post" enctype="multipart/form-data" class="product-form">
+        {% for option in product.options_with_values %}
+          <fieldset class="variant-option">
+            <legend class="variant-label">{{ option.name }}</legend>
+            
+            {% if option.values.size == 1 %}
+              <input 
+                type="hidden"
+                name="options[{{ option.name }}]"
+                value="{{ option.values.first }}"
+              >
+            {% else %}
+              {% if option.name == 'Color' %}
+                <div class="color-options">
+                  {% for value in option.values %}
+                    <label class="color-label">
+                      <input 
+                        type="radio"
+                        name="options[{{ option.name }}]"
+                        value="{{ value }}"
+                        required
+                      >
+                      <span class="color-swatch" style="background: {{ value | downcase }}"></span>
+                      <span>{{ value }}</span>
+                    </label>
+                  {% endfor %}
+                </div>
+              {% elsif option.name == 'Size' %}
+                <div class="size-options">
+                  {% for value in option.values %}
+                    <label class="size-label">
+                      <input 
+                        type="radio"
+                        name="options[{{ option.name }}]"
+                        value="{{ value }}"
+                        required
+                      >
+                      <span>{{ value }}</span>
+                    </label>
+                  {% endfor %}
+                </div>
+              {% else %}
+                <select name="options[{{ option.name }}]" required>
+                  <option value="">Select {{ option.name }}</option>
+                  {% for value in option.values %}
+                    <option value="{{ value }}">{{ value }}</option>
+                  {% endfor %}
+                </select>
+              {% endif %}
+            {% endif %}
+          </fieldset>
+        {% endfor %}
+
+        <!-- Quantity -->
+        <fieldset class="quantity-selector">
+          <legend class="variant-label">Quantity</legend>
+          <div class="quantity-input">
+            <button type="button" class="qty-btn" onclick="decreaseQty()">−</button>
+            <input 
+              type="number" 
+              name="quantity" 
+              value="1" 
+              min="1" 
+              id="qty-input"
+            >
+            <button type="button" class="qty-btn" onclick="increaseQty()">+</button>
+          </div>
+        </fieldset>
+
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+
+        <button type="submit" class="button button--primary button--large">
+          Add to Cart
+        </button>
+      </form>
+
+      <!-- Trust Badges -->
+      <div class="product-badges">
+        <div class="badge">
+          <span class="badge-icon">✓</span>
+          <span>Free Shipping on Orders $99+</span>
+        </div>
+        <div class="badge">
+          <span class="badge-icon">✓</span>
+          <span>30-Day Return Policy</span>
+        </div>
+        <div class="badge">
+          <span class="badge-icon">✓</span>
+          <span>Secure Checkout</span>
+        </div>
+      </div>
+
+      <!-- Share -->
+      <div class="share-product">
+        <span>Share:</span>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ product.url | url_encode }}" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://twitter.com/intent/tweet?url={{ product.url | url_encode }}&text={{ product.title | url_encode }}" target="_blank" rel="noopener">Twitter</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Main"
+}
+{% endschema %}
+
+<style>
+.product-main__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.breadcrumb {
+  font-size: 0.875rem;
+  color: #999;
+  margin-bottom: 1.5rem;
+}
+
+.breadcrumb a {
+  color: #999;
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--color-accent);
+}
+
+.product-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.product-gallery__main {
+  background: var(--color-light-bg);
+  aspect-ratio: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-gallery__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-gallery__thumbnails {
+  display: flex;
+  gap: 1rem;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #ddd;
+  background: var(--color-light-bg);
+  padding: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.thumbnail:hover {
+  border-color: var(--color-accent);
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-header {
+  margin-bottom: 1rem;
+}
+
+.product-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--color-text);
+  font-family: 'Playfair Display', serif;
+}
+
+.product-vendor {
+  font-size: 0.875rem;
+  color: #999;
+  margin: 0.5rem 0 0 0;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.stars {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.star {
+  color: var(--color-accent);
+}
+
+.rating-count {
+  font-size: 0.875rem;
+  color: #999;
+}
+
+.product-pricing {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 1rem;
+}
+
+.discount {
+  background: var(--color-accent);
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 2px;
+  font-size: 0.875rem;
+}
+
+.product-description {
+  margin-bottom: 2rem;
+  line-height: 1.8;
+  color: #666;
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.variant-option {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.variant-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.color-options,
+.size-options {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.color-label,
+.size-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.color-label input,
+.size-label input {
+  cursor: pointer;
+}
+
+.color-swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}
+
+.size-label {
+  padding: 0.5rem 1rem;
+  border: 2px solid #ddd;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.size-label:has(input:checked) {
+  border-color: var(--color-accent);
+  background: var(--color-light-bg);
+}
+
+.quantity-selector {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.quantity-input {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  width: fit-content;
+}
+
+.qty-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.qty-btn:hover {
+  background: var(--color-light-bg);
+}
+
+#qty-input {
+  border: none;
+  width: 60px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.button--large {
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.product-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.badge {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.badge-icon {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.share-product {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+}
+
+.share-product a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+  .product-main__container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-title {
+    font-size: 1.5rem;
+  }
+
+  .product-gallery__thumbnails {
+    gap: 0.5rem;
+  }
+
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+}
+</style>
+
+<script>
+function increaseQty() {
+  const input = document.getElementById('qty-input');
+  input.value = parseInt(input.value) + 1;
+}
+
+function decreaseQty() {
+  const input = document.getElementById('qty-input');
+  if (parseInt(input.value) > 1) {
+    input.value = parseInt(input.value) - 1;
+  }
+}
+</script>

@@ -1,0 +1,99 @@
+<section class="customer-addresses">
+  <div class="customer-addresses__container">
+    <h1 class="addresses__title">Your Addresses</h1>
+    
+    <div class="addresses__grid">
+      {% for address in customer.addresses %}
+        <div class="address-card">
+          <div class="address-card__header">
+            <h3>{{ address.first_name }} {{ address.last_name }}</h3>
+            {% if address.default %}
+              <span class="badge badge--default">Default</span>
+            {% endif %}
+          </div>
+
+          <p>{{ address.street }}</p>
+          <p>{{ address.city }}, {{ address.province }} {{ address.zip }}</p>
+          <p>{{ address.country }}</p>
+          <p>{{ address.phone }}</p>
+
+          <div class="address-card__actions">
+            <a href="{{ address.url }}" class="button button--small">Edit</a>
+            <form action="{{ address.delete_url }}" method="post" style="display:inline;">
+              <button type="submit" class="button button--small button--outline">Delete</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <a href="/account/addresses/new" class="button button--primary">Add New Address</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer Addresses"
+}
+{% endschema %}
+
+<style>
+.customer-addresses {
+  padding: 2rem 1.5rem;
+  background: #f9f9f9;
+  min-height: calc(100vh - 300px);
+}
+
+.customer-addresses__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.addresses__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 2rem 0;
+  font-family: 'Playfair Display', serif;
+}
+
+.addresses__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.address-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.address-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.address-card__header h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.address-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.button--outline {
+  background: transparent;
+  border-color: #ddd;
+  color: var(--color-text);
+}
+
+.button--outline:hover {
+  background: #f9f9f9;
+}
+</style>

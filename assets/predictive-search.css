@@ -1,0 +1,124 @@
+/* Predictive Search */
+.predictive-search {
+  position: relative;
+  width: 100%;
+}
+
+.predictive-search__input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  font-size: 1rem;
+}
+
+.predictive-search__loading {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+}
+
+.predictive-search__loading.active {
+  display: block;
+}
+
+.predictive-search__results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 10;
+  display: none;
+}
+
+.predictive-search__results.active {
+  display: block;
+}
+
+.predictive-search__result-item {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.predictive-search__result-item:hover {
+  background: var(--color-light-bg);
+}
+
+.predictive-search__result-item-image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  display: inline-block;
+  margin-right: 0.75rem;
+  vertical-align: middle;
+}
+
+.predictive-search__result-item-title {
+  vertical-align: middle;
+  font-weight: 500;
+}
+
+.predictive-search__result-item-price {
+  display: block;
+  font-size: 0.875rem;
+  color: #999;
+  margin-top: 0.25rem;
+}
+
+/* Search Modal */
+.search-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 100;
+  padding-top: 20vh;
+  animation: fadeIn 0.3s ease;
+}
+
+.search-modal__content {
+  background: white;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 4px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.search-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.search-modal__close:hover {
+  color: var(--color-text);
+}
+
+.search-modal .search-input {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  font-size: 1.25rem;
+  padding: 1rem;
+}
+
+@media (max-width: 768px) {
+  .search-modal {
+    padding-top: 10vh;
+  }
+}

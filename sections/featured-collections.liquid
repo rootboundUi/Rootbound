@@ -1,0 +1,233 @@
+<section class="featured-collections">
+  <div class="featured-collections__container">
+    <div class="featured-collections__header">
+      <h2 class="featured-collections__title">{{ section.settings.title }}</h2>
+      <p class="featured-collections__description">{{ section.settings.description }}</p>
+    </div>
+
+    <div class="featured-collections__grid">
+      {% for block in section.blocks %}
+        {% if block.settings.collection %}
+          <div class="collection-card">
+            {% if block.settings.image %}
+              <div class="collection-card__image">
+                <img 
+                  src="{{ block.settings.image | image_url: width: 500 }}"
+                  alt="{{ block.settings.image.alt | escape }}"
+                  loading="lazy"
+                >
+              </div>
+            {% else %}
+              <div class="collection-card__image placeholder">
+                <span>No Image</span>
+              </div>
+            {% endif %}
+
+            <div class="collection-card__content">
+              <h3 class="collection-card__title">{{ block.settings.collection.title }}</h3>
+              <a href="{{ block.settings.collection.url }}" class="collection-card__link">
+                Explore →
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_all_collections %}
+      <div class="featured-collections__footer">
+        <a href="/collections/all" class="button button--secondary">
+          View All Collections
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Featured Collections"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Section Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_all_collections",
+      "label": "Show View All Link",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Collection Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collections",
+      "blocks": [
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.featured-collections {
+  padding: 4rem 1.5rem;
+  background: #fff;
+}
+
+.featured-collections__container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.featured-collections__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.featured-collections__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+  color: var(--color-text);
+  font-family: 'Playfair Display', serif;
+}
+
+.featured-collections__description {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.featured-collections__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.collection-card {
+  overflow: hidden;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: relative;
+  height: 350px;
+}
+
+.collection-card:hover {
+  transform: translateY(-4px);
+}
+
+.collection-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+}
+
+.collection-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.collection-card__image.placeholder {
+  background: var(--color-light-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+}
+
+.collection-card__content {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 2rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: #fff;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.collection-card:hover .collection-card__content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.collection-card__title {
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+  font-weight: 700;
+}
+
+.collection-card__link {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.featured-collections__footer {
+  text-align: center;
+}
+
+.button--secondary {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.button--secondary:hover {
+  background: var(--color-text);
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .featured-collections {
+    padding: 2rem 1.5rem;
+  }
+
+  .featured-collections__grid {
+    gap: 1.5rem;
+  }
+
+  .featured-collections__title {
+    font-size: 1.5rem;
+  }
+}
+</style>

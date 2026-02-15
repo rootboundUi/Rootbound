@@ -1,0 +1,105 @@
+<section class="collection-products">
+  <div class="collection-products__container">
+    {% if collection.products.size > 0 %}
+      <div class="products__grid">
+        {% for product in collection.products %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <div class="pagination">
+          {% if paginate.previous %}
+            <a href="{{ paginate.previous.url }}" class="pagination__link">← Previous</a>
+          {% endif %}
+
+          {% for part in paginate.parts %}
+            {% if part.is_link %}
+              <a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a>
+            {% else %}
+              <span class="pagination__current">{{ part.title }}</span>
+            {% endif %}
+          {% endfor %}
+
+          {% if paginate.next %}
+            <a href="{{ paginate.next.url }}" class="pagination__link">Next →</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="empty-state">
+        <p>No products found in this collection.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection Products",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products Per Page",
+      "min": 6,
+      "max": 48,
+      "step": 6,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+.collection-products__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+.products__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: #666;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.pagination__link,
+.pagination__current {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.pagination__link:hover {
+  background: var(--color-light-bg);
+}
+
+.pagination__current {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .products__grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+}
+</style>

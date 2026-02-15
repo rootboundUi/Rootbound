@@ -1,0 +1,9 @@
+<!-- Star rating display -->
+{% if rating %}
+  <div class="rating-display" aria-label="Product rating: {{ rating }} out of 5 stars">
+    {% for i in (1..5) %}
+      <span class="star {% if i <= rating %}active{% endif %}">★</span>
+    {% endfor %}
+    <span class="rating-value">({{ rating | round | at_least: 1 | at_most: 5 }})</span>
+  </div>
+{% endif %}

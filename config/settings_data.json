@@ -1,0 +1,23 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "color_primary": "#000000",
+      "color_secondary": "#666666",
+      "color_accent": "#E85D04",
+      "color_text": "#1a1a1a",
+      "color_light_bg": "#f5f5f5",
+      "font_heading": "arial_n4",
+      "font_body": "arial_n4",
+      "layout_products_per_row": "4",
+      "menu_main": "main-menu",
+      "social_instagram": "https://instagram.com",
+      "social_facebook": "https://facebook.com",
+      "social_twitter": "https://twitter.com",
+      "newsletter_enabled": true,
+      "newsletter_text": "Stay in the Loop",
+      "predictive_search_enabled": true,
+      "show_search_products": true
+    }
+  }
+}

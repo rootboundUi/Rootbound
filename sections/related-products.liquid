@@ -1,0 +1,55 @@
+<section class="related-products">
+  <div class="related-products__container">
+    <h2 class="related-products__title">You Might Also Like</h2>
+    
+    <div class="related-products__grid">
+      {% for product in collection.products limit: 4 %}
+        {% if product.id != current_product.id %}
+          {% render 'product-card', product: product %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Related Products"
+}
+{% endschema %}
+
+<style>
+.related-products {
+  padding: 4rem 1.5rem;
+  background: #f9f9f9;
+}
+
+.related-products__container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.related-products__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 2rem 0;
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+}
+
+.related-products__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .related-products {
+    padding: 2rem 1.5rem;
+  }
+
+  .related-products__grid {
+    gap: 1.5rem;
+  }
+}
+</style>
