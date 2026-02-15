@@ -37,7 +37,10 @@
       "footer": {
         "type": "footer",
         "custom_css": [],
-        "settings": {}
+        "settings": {
+          "logo": "shopify://shop_images/root-removebg-preview.png",
+          "description": "Contemporary streetwear designed for those who embrace their unique style and challenge the ordinary."
+        }
       }
     },
     "content_for_index": []
