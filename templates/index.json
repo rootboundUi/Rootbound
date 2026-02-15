@@ -31,34 +31,41 @@
         "show_view_all": true
       }
     },
-    "featured_collections": {
-      "type": "featured-collections",
+    "rich_text_LHAKHE": {
+      "type": "rich-text",
+      "name": "Rich Text",
       "settings": {
-        "title": "Our Collections",
-        "description": "",
-        "show_all_collections": true
+        "content": "<p>Why RootBound</p><h2>What Sets Us Apart</h2><p>We're not just a fashion brand—we're a movement celebrating authenticity and self-expression</p><p></p>",
+        "button_text": "",
+        "button_link": "",
+        "layout": "right"
       }
     },
     "testimonials": {
       "type": "testimonials",
+      "blocks": {
+        "testimonial_z6nLwL": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "\"RootBound captured exactly what I was looking for—authentic streetwear that actually reflects my style. The quality is amazing!\"",
+            "author": "Arjun Patel",
+            "location": "Mumbai"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_z6nLwL"
+      ],
       "settings": {
         "title": "Customer Love",
         "subtitle": "What our community says"
-      }
-    },
-    "gallery": {
-      "type": "image-gallery",
-      "settings": {
-        "title": "From the Community",
-        "columns": "3"
       }
     }
   },
   "order": [
     "hero",
     "featured_products",
-    "featured_collections",
-    "testimonials",
-    "gallery"
+    "rich_text_LHAKHE",
+    "testimonials"
   ]
 }
