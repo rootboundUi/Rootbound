@@ -35,7 +35,7 @@
       "type": "rich-text",
       "name": "Rich Text",
       "settings": {
-        "content": "<p>Why RootBound</p><h2>What Sets Us Apart</h2><p>We're not just a fashion brand—we're a movement celebrating authenticity and self-expression</p><p></p>",
+        "content": "<h5>Why RootBound</h5><h2>Heritage Is Not Behind Us. It Is Within Us.</h2><h3>Modern heritage for those who move with presence.</h3><p><br/>Rootbound operates at the intersection of cultural identity and modern global fashion. <br/>We translate heritage into premium, contemporary design for a rising generation seeking meaning beyond trends.<br/></p>",
         "button_text": "",
         "button_link": "",
         "layout": "right"
