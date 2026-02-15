@@ -56,4 +56,84 @@
     </div>
 
   </div>
+
+
+  .premium-footer {
+  position: relative;
+  background: #F4F4F2; /* Light editorial background */
+  padding: 140px 8%;
+  overflow: hidden;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+/* BIG BACKGROUND WORD */
+.footer-bg-text {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 220px;
+  font-weight: 700;
+  letter-spacing: 10px;
+  color: rgba(0, 0, 0, 0.04);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* CONTENT */
+.footer-content {
+  position: relative;
+  z-index: 2;
+}
+
+/* LOGO */
+.logo {
+  font-size: 32px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+/* BRAND TEXT */
+.footer-brand p {
+  max-width: 500px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 80px;
+}
+
+/* GRID */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 80px;
+}
+
+/* SECTION TITLES */
+.footer-grid h4 {
+  font-size: 12px;
+  letter-spacing: 4px;
+  margin-bottom: 30px;
+  color: #000;
+}
+
+/* LINKS */
+.footer-grid ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-grid li {
+  margin-bottom: 18px;
+  font-size: 15px;
+  color: #555;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.footer-grid li:hover {
+  color: #000;
+}
+
 </footer>
