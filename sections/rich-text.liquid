@@ -119,4 +119,121 @@
     font-size: 1.5rem;
   }
 }
+.rich-text {
+  padding: 6rem 2rem;
+  background: linear-gradient(
+    90deg,
+    #faf7f4 0%,
+    #ffffff 50%,
+    #faf7f4 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.rich-text__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.rich-text__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* WHY ROOTBOUND small label */
+.rich-text__content h5 {
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #b68c5a; /* soft gold accent */
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Main Heading */
+.rich-text__content h2 {
+  font-size: 2.8rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+  font-family: 'Playfair Display', serif; /* same as hero */
+  color: #111;
+}
+
+/* Subline */
+.rich-text__content h3 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #444;
+  margin: 0;
+}
+
+/* Paragraph */
+.rich-text__content p {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: #666;
+  max-width: 520px;
+}
+
+/* Image Styling */
+.rich-text__image img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  transition: transform 0.6s ease, box-shadow 0.6s ease;
+}
+
+.rich-text__image img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+}
+
+/* Premium Button */
+.button--primary {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  background: transparent;
+  border: 1px solid #111;
+  color: #111;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.4s ease;
+  width: fit-content;
+}
+
+.button--primary:hover {
+  background: #111;
+  color: #fff;
+}
+
+/* Mobile */
+@media (max-width: 1024px) {
+  .rich-text__container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .rich-text__content h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .rich-text {
+    padding: 4rem 1.5rem;
+  }
+
+  .rich-text__content h2 {
+    font-size: 1.7rem;
+  }
+}
+
 </style>
