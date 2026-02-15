@@ -33,7 +33,6 @@
     },
     "rich_text_LHAKHE": {
       "type": "rich-text",
-      "custom_css": [],
       "name": "Rich Text",
       "settings": {
         "content": "<p>Why RootBound</p><h2>What Sets Us Apart</h2><p>We're not just a fashion brand—we're a movement celebrating authenticity and self-expression</p><p></p>",
