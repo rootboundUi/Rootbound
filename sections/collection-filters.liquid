@@ -3,6 +3,34 @@
   <!-- FULL WIDTH TOOLBAR -->
   <div class="collection-toolbar">
     <div class="collection-toolbar-inner">
+      <div class="collection-toolbar">
+  <div class="collection-toolbar-inner">
+
+    <!-- MOBILE LEFT -->
+    <button type="button" class="mobile-filter-btn">
+      Filters
+    </button>
+
+    <!-- CENTER -->
+    <span class="results-count">
+      {{ collection.products_count }} items
+    </span>
+
+    <!-- RIGHT -->
+    <select class="sort-select"
+      onchange="window.location.href=this.value">
+      {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
+      {% for option in collection.sort_options %}
+        <option value="{{ collection.url }}?sort_by={{ option.value }}"
+          {% if option.value == current_sort %}selected{% endif %}>
+          {{ option.name }}
+        </option>
+      {% endfor %}
+    </select>
+
+  </div>
+</div>
+
 
       <!-- LEFT FILTERS -->
       <div class="filters-left">
