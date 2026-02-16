@@ -1,140 +1,114 @@
 <section class="cart-main">
   <div class="cart__container">
+
     {% if cart.item_count > 0 %}
-      <div class="cart__content">
-        <!-- Cart Items -->
-        <div class="cart__items">
-          <h1 class="cart__title">Shopping Cart</h1>
-          
-          <table class="cart-table">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Total</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for item in cart.items %}
-                <tr class="cart-item" data-item-id="{{ item.key }}">
-                  <td class="cart-item__product">
-                    <a href="{{ item.url }}">
-                      <img 
-                        src="{{ item.image | image_url: width: 100 }}"
-                        alt="{{ item.title | escape }}"
-                        class="cart-item__image"
-                      >
-                    </a>
-                    <div>
-                      <p class="cart-item__title">{{ item.title }}</p>
-                      {% if item.variant.title != 'Default Title' %}
-                        <p class="cart-item__variant">{{ item.variant.title }}</p>
-                      {% endif %}
-                    </div>
-                  </td>
-                  <td class="cart-item__price">{{ item.price | money }}</td>
-                  <td class="cart-item__quantity">
-                    <form action="/cart/change" method="post" class="quantity-form">
-                      <input type="hidden" name="line" value="{{ forloop.index }}">
-                      <input 
-                        type="number" 
-                        name="quantity" 
+
+      <h1 class="cart__title">Shopping Cart</h1>
+
+      <form action="{{ routes.cart_url }}" method="post">
+
+        <div class="cart__content">
+
+          <!-- CART ITEMS -->
+          <div class="cart__items">
+
+            <table class="cart-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in cart.items %}
+                  <tr class="cart-item">
+                    
+                    <td class="cart-item__product">
+                      <a href="{{ item.url }}">
+                        <img 
+                          src="{{ item.image | image_url: width: 100 }}"
+                          alt="{{ item.title | escape }}"
+                          class="cart-item__image"
+                        >
+                      </a>
+                      <div>
+                        <p class="cart-item__title">{{ item.product.title }}</p>
+                        {% unless item.variant.title == 'Default Title' %}
+                          <p class="cart-item__variant">{{ item.variant.title }}</p>
+                        {% endunless %}
+                      </div>
+                    </td>
+
+                    <td>{{ item.price | money }}</td>
+
+                    <td>
+                      <input
+                        type="number"
+                        name="updates[]"
                         value="{{ item.quantity }}"
                         min="0"
                         class="qty-input"
                       >
-                      <button type="submit" class="qty-update">Update</button>
-                    </form>
-                  </td>
-                  <td class="cart-item__total">{{ item.final_line_price | money }}</td>
-                  <td class="cart-item__remove">
-                    <form action="/cart/change" method="post">
-                      <input type="hidden" name="line" value="{{ forloop.index }}">
-                      <input type="hidden" name="quantity" value="0">
-                      <button type="submit" class="remove-btn">Remove</button>
-                    </form>
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+                    </td>
 
-        <!-- Cart Summary -->
-        <div class="cart__summary">
-          <h2 class="summary__header">Order Summary</h2>
-          
-          <div class="summary__line">
-            <span>Subtotal</span>
-            <span>{{ cart.subtotal_price | money }}</span>
+                    <td>{{ item.final_line_price | money }}</td>
+
+                    <td>
+                      <a href="{{ item.url_to_remove }}" class="remove-btn">
+                        Remove
+                      </a>
+                    </td>
+
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
           </div>
 
-          <div class="summary__line">
-            <span>Shipping</span>
-            <span>{{ cart.shipping_price | money }}</span>
-          </div>
+          <!-- SUMMARY -->
+          <div class="cart__summary">
 
-          <div class="summary__line">
-            <span>Tax</span>
-            <span>{{ cart.tax_price | money }}</span>
-          </div>
+            <h2 class="summary__header">Order Summary</h2>
 
-          <div class="summary__total">
-            <span>Total</span>
-            <span>{{ cart.total_price | money }}</span>
-          </div>
+            <div class="summary__line">
+              <span>Subtotal</span>
+              <span>{{ cart.total_price | money }}</span>
+            </div>
 
-          <form action="/checkout" method="post" class="checkout-form">
-            <button type="submit" class="button button--primary button--large">
+            <button
+              type="submit"
+              name="update"
+              class="button button--secondary button--block"
+              style="margin-bottom:1rem;"
+            >
+              Update Cart
+            </button>
+
+            <button
+              type="submit"
+              name="checkout"
+              class="button button--primary button--block"
+            >
               Proceed to Checkout
             </button>
-          </form>
 
-          <a href="/collections/all" class="button button--secondary button--block">
-            Continue Shopping
-          </a>
+            <a href="/collections/all" class="button button--block" style="margin-top:1rem;">
+              Continue Shopping
+            </a>
 
-          <!-- Discount Code -->
-          <details class="discount-section">
-            <summary>Have a discount code?</summary>
-            <form action="/cart" method="post" class="discount-form">
-              <input 
-                type="text" 
-                name="discount"
-                placeholder="Enter code"
-                class="discount-input"
-              >
-              <button type="submit" class="button button--small">Apply</button>
-            </form>
-          </details>
-        </div>
-      </div>
+          </div>
 
-      <!-- Trust Badges -->
-      <div class="cart__badges">
-        <div class="badge">
-          <svg class="badge__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="20 6 9 17 4 12"></polyline>
-          </svg>
-          <span>Secure checkout</span>
         </div>
-        <div class="badge">
-          <svg class="badge__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-            <path d="M1 10h22"></path>
-          </svg>
-          <span>Multiple payment methods</span>
-        </div>
-        <div class="badge">
-          <svg class="badge__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-          </svg>
-          <span>30-day guarantee</span>
-        </div>
-      </div>
+
+      </form>
+
     {% else %}
+
+      <!-- EMPTY CART -->
       <div class="empty-cart">
         <div class="empty-cart__content">
           <svg class="empty-cart__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -143,17 +117,24 @@
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
           </svg>
           <h2 class="empty-cart__title">Your cart is empty</h2>
-          <p class="empty-cart__text">Discover our curated collection of premium streetwear</p>
-          <a href="/collections/all" class="button button--primary">Start Shopping</a>
+          <p class="empty-cart__text">
+            Discover our curated collection of premium streetwear
+          </p>
+          <a href="/collections/all" class="button button--primary">
+            Start Shopping
+          </a>
         </div>
       </div>
+
     {% endif %}
+
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Cart Main"
+  "name": "Main Cart",
+  "settings": []
 }
 {% endschema %}
 
@@ -167,8 +148,7 @@
 .cart__title {
   font-size: 2rem;
   font-weight: 700;
-  margin: 0 0 2rem 0;
-  font-family: 'Playfair Display', serif;
+  margin-bottom: 2rem;
 }
 
 .cart__content {
@@ -182,110 +162,43 @@
   border-collapse: collapse;
 }
 
-.cart-table th {
-  text-align: left;
-  padding: 1rem;
-  border-bottom: 2px solid #e0e0e0;
-  font-weight: 600;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
+.cart-table th,
 .cart-table td {
-  padding: 1.5rem 1rem;
+  padding: 1rem;
   border-bottom: 1px solid #e0e0e0;
 }
 
 .cart-item__product {
   display: flex;
   gap: 1rem;
-  align-items: flex-start;
 }
 
 .cart-item__image {
   width: 80px;
   height: 80px;
   object-fit: cover;
-  border-radius: 4px;
-}
-
-.cart-item__title {
-  font-weight: 600;
-  margin: 0;
-  color: var(--color-text);
-}
-
-.cart-item__variant {
-  font-size: 0.875rem;
-  color: #999;
-  margin: 0.5rem 0 0 0;
-}
-
-.quantity-form {
-  display: flex;
-  gap: 0.5rem;
 }
 
 .qty-input {
   width: 60px;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 2px;
-}
-
-.qty-update {
-  padding: 0.5rem 1rem;
-  background: var(--color-light-bg);
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
-  font-size: 0.75rem;
+  padding: 0.4rem;
 }
 
 .remove-btn {
-  color: var(--color-accent);
-  background: none;
-  border: none;
-  cursor: pointer;
+  color: #c67c4e;
   text-decoration: underline;
-  font-size: 0.875rem;
 }
 
 .cart__summary {
-  background: var(--color-light-bg);
+  background: #f9f9f9;
   padding: 1.5rem;
-  border-radius: 4px;
+  border-radius: 6px;
   height: fit-content;
-  position: sticky;
-  top: 100px;
-}
-
-.summary__header {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0 0 1.5rem 0;
 }
 
 .summary__line {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.75rem;
-  font-size: 0.875rem;
-}
-
-.summary__total {
-  display: flex;
-  justify-content: space-between;
-  margin: 1.5rem 0;
-  padding: 1rem 0;
-  border-top: 2px solid #ddd;
-  border-bottom: 2px solid #ddd;
-  font-weight: 700;
-  font-size: 1.125rem;
-}
-
-.checkout-form {
   margin-bottom: 1rem;
 }
 
@@ -294,63 +207,17 @@
   width: 100%;
   padding: 0.75rem;
   text-align: center;
-}
-
-.discount-section {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid #ddd;
-}
-
-.discount-section summary {
+  border: none;
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 600;
 }
 
-.discount-form {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
+.button--primary {
+  background: #000;
+  color: #fff;
 }
 
-.discount-input {
-  flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 2px;
-  font-size: 0.875rem;
-}
-
-.button--small {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-}
-
-.cart__badges {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-.badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.75rem;
-}
-
-.badge__icon {
-  width: 32px;
-  height: 32px;
-  color: var(--color-accent);
-}
-
-.badge span {
-  font-size: 0.875rem;
-  color: #666;
+.button--secondary {
+  background: #ddd;
 }
 
 .empty-cart {
@@ -365,44 +232,15 @@
 }
 
 .empty-cart__icon {
-  width: 64px;
-  height: 64px;
-  color: #ddd;
+  width: 60px;
+  height: 60px;
+  color: #ccc;
   margin-bottom: 1rem;
-}
-
-.empty-cart__title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0 0 0.5rem 0;
-}
-
-.empty-cart__text {
-  color: #999;
-  margin-bottom: 2rem;
 }
 
 @media (max-width: 768px) {
   .cart__content {
     grid-template-columns: 1fr;
   }
-
-  .cart__summary {
-    position: static;
-  }
-
-  .cart-table {
-    font-size: 0.875rem;
-  }
-
-  .cart-table th,
-  .cart-table td {
-    padding: 0.75rem;
-  }
-
-  .cart__badges {
-    grid-template-columns: 1fr;
-  }
 }
 </style>
-
