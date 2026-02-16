@@ -1,4 +1,6 @@
-<section class="collection-filters">
+<form method="get" action="{{ collection.url }}">
+  <!-- FILTER SECTION HERE -->
+  <section class="collection-filters">
   <div class="filters-wrapper">
 
     <!-- LEFT FILTERS -->
@@ -85,10 +87,9 @@
     </div>
 
   </div>
-  <form method="get" action="{{ collection.url }}">
-  <!-- FILTER SECTION HERE -->
-</form>
 </section>
+
+</form>
 
 
 
