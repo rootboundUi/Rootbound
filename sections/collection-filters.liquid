@@ -49,81 +49,67 @@
 {% endschema %}
 
 <style>
-/* ========================= */
-/* PREMIUM FILTER HEADER */
-/* ========================= */
+/* ========================== */
+/* MODERN FILTER BAR */
+/* ========================== */
 
 .collection-filters {
-  border-bottom: 1px solid rgba(0,0,0,0.08);
-  padding: 1rem 2rem;
-  background: #fff;
+  background: #f7f5f2; /* soft luxury tone */
+  padding: 1.2rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
-.filters-bar {
+.filters-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 2rem;
 }
 
 /* LEFT SIDE */
 .filters-left {
-  display: center;
-  gap: 2rem;
+  display: flex;
+  gap: 2.5rem;
   align-items: center;
 }
 
-.filter-dropdown {
-  position: relative;
-}
-
-.filter-trigger {
+/* FILTER BUTTON */
+.filter-btn {
   background: none;
   border: none;
-  font-size: 13px;
-  color: #111;
+  font-size: 14px;
+  font-weight: 500;
+  color: #222;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0;
+  position: relative;
+  padding-bottom: 4px;
+  transition: all 0.3s ease;
 }
 
-.chevron {
-  font-size: 10px;
-}
-
-/* Dropdown Panel */
-.filter-panel {
+/* Underline hover effect */
+.filter-btn::after {
+  content: "";
   position: absolute;
-  top: 120%;
+  bottom: 0;
   left: 0;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.08);
-  padding: 1rem;
-  min-width: 180px;
-  display: none;
-  flex-direction: column;
-  gap: 0.5rem;
-  z-index: 10;
+  width: 0%;
+  height: 1px;
+  background: #111;
+  transition: width 0.3s ease;
 }
 
-.filter-dropdown:hover .filter-panel {
-  display: flex;
-}
-
-.filter-panel label {
-  font-size: 13px;
-  cursor: pointer;
-  display: flex;
-  gap: 0.5rem;
+.filter-btn:hover::after {
+  width: 100%;
 }
 
 /* RIGHT SIDE */
 .filters-right {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 
 .results-count {
@@ -133,29 +119,31 @@
 
 .sort-select {
   border: none;
-  font-size: 13px;
-  cursor: pointer;
   background: none;
+  font-size: 14px;
+  cursor: pointer;
+  color: #222;
 }
 
 /* MOBILE */
 @media (max-width: 768px) {
 
-  .filters-bar {
+  .filters-wrapper {
     flex-direction: column;
-    align-items: flex-start;
     gap: 1rem;
+    align-items: center;
   }
 
   .filters-left {
-    overflow-x: auto;
-    width: 100%;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .filters-right {
-    width: 100%;
-    justify-content: space-between;
+    justify-content: center;
   }
 }
+
 
 </style>
