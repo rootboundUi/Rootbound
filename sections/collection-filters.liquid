@@ -58,6 +58,32 @@
           </div>
         </details>
       {% endfor %}
+      <script>
+document.addEventListener("DOMContentLoaded", function() {
+
+  const dropdowns = document.querySelectorAll(".filter-dropdown");
+
+  dropdowns.forEach(drop => {
+    const btn = drop.querySelector(".filter-btn");
+
+    btn.addEventListener("click", function(e) {
+      e.stopPropagation();
+
+      dropdowns.forEach(d => {
+        if (d !== drop) d.classList.remove("active");
+      });
+
+      drop.classList.toggle("active");
+    });
+  });
+
+  document.addEventListener("click", function() {
+    dropdowns.forEach(drop => drop.classList.remove("active"));
+  });
+
+});
+</script>
+
 
     </div>
 
