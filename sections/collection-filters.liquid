@@ -1,22 +1,22 @@
 <form method="get" action="{{ collection.url }}">
   <!-- FILTER SECTION HERE -->
-  <section class="collection-filters">
-  <div class="filters-wrapper">
+<form method="get" action="{{ collection.url }}" id="CollectionFiltersForm">
 
-    <!-- LEFT FILTERS -->
+  <div class="collection-toolbar">
+
+    <!-- LEFT SIDE FILTERS -->
     <div class="filters-left">
-
       {% for filter in collection.filters %}
-        <details class="filter-dropdown">
-          <summary class="filter-btn">
+        <div class="filter-dropdown">
+          <button type="button" class="filter-btn">
             {{ filter.label }}
-          </summary>
+            <span class="arrow"></span>
+          </button>
 
           <div class="filter-content">
-
             {% case filter.type %}
 
-              {% when 'boolean' %}
+              {% when 'boolean' or 'list' %}
                 {% for value in filter.values %}
                   <label class="filter-option">
                     <input type="checkbox"
@@ -24,19 +24,7 @@
                       value="{{ value.value }}"
                       {% if value.active %}checked{% endif %}
                       onchange="this.form.submit()">
-                    {{ value.label }} ({{ value.count }})
-                  </label>
-                {% endfor %}
-
-              {% when 'list' %}
-                {% for value in filter.values %}
-                  <label class="filter-option">
-                    <input type="checkbox"
-                      name="{{ value.param_name }}"
-                      value="{{ value.value }}"
-                      {% if value.active %}checked{% endif %}
-                      onchange="this.form.submit()">
-                    {{ value.label }} ({{ value.count }})
+                    {{ value.label }}
                   </label>
                 {% endfor %}
 
@@ -54,11 +42,53 @@
                 </div>
 
             {% endcase %}
-
           </div>
-        </details>
+        </div>
       {% endfor %}
-      <script>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="filters-right">
+      <span class="results-count">
+        {{ collection.products_count }} items
+      </span>
+
+      <select class="sort-select"
+        onchange="window.location.href=this.value">
+        {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
+        {% for option in collection.sort_options %}
+          <option value="{{ collection.url }}?sort_by={{ option.value }}"
+            {% if option.value == current_sort %}selected{% endif %}>
+            {{ option.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+  </div>
+
+  <!-- ACTIVE FILTER TAGS -->
+  {% if collection.filters != blank %}
+    <div class="active-filters">
+      {% for filter in collection.filters %}
+        {% for value in filter.active_values %}
+          <a href="{{ value.url_to_remove }}" class="active-pill">
+            {{ value.label }} ✕
+          </a>
+        {% endfor %}
+      {% endfor %}
+
+      {% if collection.current_vendor or collection.current_type or collection.current_tags %}
+        <a href="{{ collection.url }}" class="clear-all">
+          Clear all
+        </a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+</form>
+
+<script>
 document.addEventListener("DOMContentLoaded", function() {
 
   const dropdowns = document.querySelectorAll(".filter-dropdown");
@@ -83,37 +113,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 </script>
-
-
-    </div>
-
-    <!-- RIGHT SIDE -->
-    <div class="filters-right">
-      <span class="results-count">
-        {{ collection.products_count }} items
-      </span>
-
-      <div class="sort-wrapper">
-        <select class="sort-select"
-          onchange="window.location.href=this.value">
-
-          {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
-
-          {% for option in collection.sort_options %}
-            <option
-              value="{{ collection.url }}?sort_by={{ option.value }}"
-              {% if option.value == current_sort %}selected{% endif %}>
-              {{ option.name }}
-            </option>
-          {% endfor %}
-
-        </select>
-      </div>
-
-    </div>
-
-  </div>
-</section>
 
 </form>
 
