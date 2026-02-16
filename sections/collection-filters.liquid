@@ -26,18 +26,38 @@
                   </label>
                 {% endfor %}
 
-              {% when 'price_range' %}
-                <div class="price-range">
-                  <input type="number"
-                    name="{{ filter.min_value.param_name }}"
-                    placeholder="Min"
-                    value="{{ filter.min_value.value }}">
-                  <input type="number"
-                    name="{{ filter.max_value.param_name }}"
-                    placeholder="Max"
-                    value="{{ filter.max_value.value }}">
-                  <button type="submit" class="apply-btn">Apply</button>
-                </div>
+             {% when 'price_range' %}
+
+<div class="price-slider">
+
+  <div class="slider-track"></div>
+
+  <input type="range"
+    min="{{ filter.range_min | money_without_currency | replace: ',', '' }}"
+    max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+    value="{{ filter.min_value.value | default: filter.range_min }}"
+    id="minRange"
+    class="range-input">
+
+  <input type="range"
+    min="{{ filter.range_min | money_without_currency | replace: ',', '' }}"
+    max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+    value="{{ filter.max_value.value | default: filter.range_max }}"
+    id="maxRange"
+    class="range-input">
+
+  <div class="price-values">
+    <span id="minValue"></span>
+    <span id="maxValue"></span>
+  </div>
+
+  <input type="hidden" name="{{ filter.min_value.param_name }}" id="minPrice">
+  <input type="hidden" name="{{ filter.max_value.param_name }}" id="maxPrice">
+
+  <button type="submit" class="apply-btn">Apply</button>
+
+</div>
+
 
             {% endcase %}
           </div>
