@@ -53,7 +53,7 @@
 
 <style>
 /* ================================
-   CLEAN PREMIUM COLLECTION GRID
+   PREMIUM CLICKABLE PRODUCT GRID
 ================================ */
 
 .collection-products__container {
@@ -71,8 +71,15 @@
   margin-bottom: 4rem;
 }
 
+/* MAKE LINK CLEAN */
+.product-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 /* PRODUCT CARD */
-.products__grid > * {
+.product-card-link > * {
   background: #ffffff;
   border-radius: 18px;
   padding: 1.2rem;
@@ -80,29 +87,37 @@
   box-shadow: 0 6px 25px rgba(0,0,0,0.04);
   overflow: hidden;
   position: relative;
+  border: 1px solid transparent;
 }
 
-/* Hover highlight (clean, no overlap) */
-.products__grid > *:hover {
+/* HOVER EFFECT */
+.product-card-link:hover > * {
   transform: translateY(-6px);
   box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+  border-color: rgba(0,0,0,0.08);
 }
 
-/* Image */
-.products__grid img {
+/* FOCUS ACCESSIBILITY */
+.product-card-link:focus-visible > * {
+  outline: 2px solid #111;
+  outline-offset: 4px;
+}
+
+/* IMAGE */
+.product-card-link img {
   width: 100%;
   border-radius: 14px;
   transition: transform 0.6s cubic-bezier(.22,.61,.36,1);
 }
 
-/* Image zoom only */
-.products__grid > *:hover img {
-  transform: scale(1.05);
+/* IMAGE ZOOM */
+.product-card-link:hover img {
+  transform: scale(1.06);
 }
 
-/* PRODUCT TEXT */
-.products__grid h3,
-.products__grid .product-title {
+/* TITLE */
+.product-card-link h3,
+.product-card-link .product-title {
   font-size: 16px;
   font-weight: 500;
   margin-top: 1.2rem;
@@ -112,17 +127,32 @@
   transition: color .25s ease;
 }
 
-/* Subtle text highlight on hover */
-.products__grid > *:hover h3,
-.products__grid > *:hover .product-title {
+.product-card-link:hover h3,
+.product-card-link:hover .product-title {
   color: #000;
 }
 
-.products__grid .price,
-.products__grid .product-price {
+/* PRICE */
+.product-card-link .price,
+.product-card-link .product-price {
   font-size: 15px;
   font-weight: 600;
   color: #111;
+}
+
+/* ================================
+   VIEW PRODUCT HIGHLIGHT
+================================ */
+
+.product-card-link .view-product,
+.product-card-link a[href*="product"] {
+  font-weight: 500;
+  color: #111;
+  transition: all .25s ease;
+}
+
+.product-card-link:hover .view-product {
+  text-decoration: underline;
 }
 
 /* PAGINATION */
@@ -171,7 +201,7 @@
     gap: 1.2rem;
   }
 
-  .products__grid > * {
+  .product-card-link > * {
     padding: 0.9rem;
     border-radius: 14px;
   }
