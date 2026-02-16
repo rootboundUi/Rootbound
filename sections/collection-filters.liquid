@@ -4,41 +4,89 @@
     <!-- LEFT FILTERS -->
     <div class="filters-left">
 
-      <div class="filter-item">
-        <button class="filter-btn">Availability</button>
-      </div>
+      {% for filter in collection.filters %}
+        <details class="filter-dropdown">
+          <summary class="filter-btn">
+            {{ filter.label }}
+          </summary>
 
-      <div class="filter-item">
-        <button class="filter-btn">Price</button>
-      </div>
+          <div class="filter-content">
 
-      <div class="filter-item">
-        <button class="filter-btn">Size</button>
-      </div>
+            {% case filter.type %}
 
-      <div class="filter-item">
-        <button class="filter-btn">Color</button>
-      </div>
+              {% when 'boolean' %}
+                {% for value in filter.values %}
+                  <label class="filter-option">
+                    <input type="checkbox"
+                      name="{{ value.param_name }}"
+                      value="{{ value.value }}"
+                      {% if value.active %}checked{% endif %}
+                      onchange="this.form.submit()">
+                    {{ value.label }} ({{ value.count }})
+                  </label>
+                {% endfor %}
+
+              {% when 'list' %}
+                {% for value in filter.values %}
+                  <label class="filter-option">
+                    <input type="checkbox"
+                      name="{{ value.param_name }}"
+                      value="{{ value.value }}"
+                      {% if value.active %}checked{% endif %}
+                      onchange="this.form.submit()">
+                    {{ value.label }} ({{ value.count }})
+                  </label>
+                {% endfor %}
+
+              {% when 'price_range' %}
+                <div class="price-range">
+                  <input type="number"
+                    name="{{ filter.min_value.param_name }}"
+                    placeholder="Min"
+                    value="{{ filter.min_value.value }}">
+                  <input type="number"
+                    name="{{ filter.max_value.param_name }}"
+                    placeholder="Max"
+                    value="{{ filter.max_value.value }}">
+                  <button type="submit" class="apply-btn">Apply</button>
+                </div>
+
+            {% endcase %}
+
+          </div>
+        </details>
+      {% endfor %}
 
     </div>
 
     <!-- RIGHT SIDE -->
     <div class="filters-right">
       <span class="results-count">
-        {{ collection.products.size }} items
+        {{ collection.products_count }} items
       </span>
 
-      <select class="sort-select" onchange="location = this.value">
-        <option value="{{ collection.url }}">Sort</option>
-        <option value="{{ collection.url }}?sort_by=best-selling">Best Selling</option>
-        <option value="{{ collection.url }}?sort_by=price-ascending">Price ↑</option>
-        <option value="{{ collection.url }}?sort_by=price-descending">Price ↓</option>
-        <option value="{{ collection.url }}?sort_by=created-descending">Newest</option>
-      </select>
+      <div class="sort-wrapper">
+        <select class="sort-select"
+          onchange="window.location.href=this.value">
+
+          {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
+
+          {% for option in collection.sort_options %}
+            <option
+              value="{{ collection.url }}?sort_by={{ option.value }}"
+              {% if option.value == current_sort %}selected{% endif %}>
+              {{ option.name }}
+            </option>
+          {% endfor %}
+
+        </select>
+      </div>
+
     </div>
 
   </div>
 </section>
+
 
 
 
@@ -49,47 +97,42 @@
 {% endschema %}
 
 <style>
-/* ========================== */
-/* MODERN FILTER BAR */
-/* ========================== */
-
 .collection-filters {
-  background:rgb(255, 255, 255); /* soft luxury tone */
+  background: #fff;
   padding: 1.2rem 0;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
 .filters-wrapper {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-/* LEFT SIDE */
 .filters-left {
   display: flex;
   gap: 2.5rem;
   align-items: center;
 }
 
-/* FILTER BUTTON */
+/* Filter Dropdown */
+.filter-dropdown {
+  position: relative;
+}
+
 .filter-btn {
-  background: none;
-  border: none;
+  list-style: none;
+  cursor: pointer;
   font-size: 14px;
   font-weight: 500;
   color: #222;
-  cursor: pointer;
-  position: relative;
   padding-bottom: 4px;
-  transition: all 0.3s ease;
+  position: relative;
 }
 
-/* Underline hover effect */
 .filter-btn::after {
   content: "";
   position: absolute;
@@ -101,8 +144,49 @@
   transition: width 0.3s ease;
 }
 
+.filter-dropdown[open] .filter-btn::after,
 .filter-btn:hover::after {
   width: 100%;
+}
+
+.filter-content {
+  position: absolute;
+  top: 120%;
+  left: 0;
+  background: #fff;
+  padding: 1rem;
+  min-width: 220px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border-radius: 10px;
+  z-index: 100;
+}
+
+.filter-option {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.price-range {
+  display: flex;
+  gap: 8px;
+}
+
+.price-range input {
+  width: 80px;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.apply-btn {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 /* RIGHT SIDE */
@@ -117,33 +201,48 @@
   color: #666;
 }
 
+/* PREMIUM SORT DROPDOWN */
+.sort-wrapper {
+  position: relative;
+}
+
 .sort-select {
-  border: none;
-  background: none;
-  font-size: 14px;
+  appearance: none;
+  background: #f7f5f2;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 8px 35px 8px 14px;
+  border-radius: 30px;
+  font-size: 13px;
   cursor: pointer;
-  color: #222;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.sort-select:hover {
+  border-color: #111;
+}
+
+.sort-wrapper::after {
+  content: "▾";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 12px;
 }
 
 /* MOBILE */
 @media (max-width: 768px) {
-
   .filters-wrapper {
     flex-direction: column;
     gap: 1rem;
-    align-items: center;
   }
 
   .filters-left {
-    gap: 1.5rem;
     flex-wrap: wrap;
     justify-content: center;
   }
-
-  .filters-right {
-    justify-content: center;
-  }
 }
-
 
 </style>
