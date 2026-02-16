@@ -1,81 +1,42 @@
 <section class="collection-filters">
-  <div class="page-width">
-    <div class="filters-bar">
+  <div class="filters-wrapper">
 
-      <!-- LEFT -->
-      <div class="filters-left">
+    <!-- LEFT FILTERS -->
+    <div class="filters-left">
 
-        <!-- Availability -->
-        <div class="filter-item">
-          <button class="filter-trigger">
-            Availability <span>⌄</span>
-          </button>
-          <div class="filter-panel">
-            {% for filter in collection.filters %}
-              {% if filter.label == "Availability" %}
-                {% for value in filter.values %}
-                  <label>
-                    <input type="checkbox"
-                      name="filter.{{ filter.param_name }}"
-                      value="{{ value.param_name }}">
-                    {{ value.label }}
-                  </label>
-                {% endfor %}
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-
-        <!-- Price -->
-        <div class="filter-item">
-          <button class="filter-trigger">
-            Price <span>⌄</span>
-          </button>
-          <div class="filter-panel price-panel">
-            <input type="number" placeholder="Min">
-            <input type="number" placeholder="Max">
-          </div>
-        </div>
-
-        <!-- Size -->
-        <div class="filter-item">
-          <button class="filter-trigger">
-            Size <span>⌄</span>
-          </button>
-          <div class="filter-panel">
-            {% for filter in collection.filters %}
-              {% if filter.label == "Size" %}
-                {% for value in filter.values %}
-                  <label>
-                    <input type="checkbox"
-                      name="filter.{{ filter.param_name }}"
-                      value="{{ value.param_name }}">
-                    {{ value.label }}
-                  </label>
-                {% endfor %}
-              {% endif %}
-            {% endfor %}
-          </div>
-        </div>
-
+      <div class="filter-item">
+        <button class="filter-btn">Availability</button>
       </div>
 
-      <!-- RIGHT -->
-      <div class="filters-right">
-        <span class="results-count">
-          {{ collection.products.size }} items
-        </span>
+      <div class="filter-item">
+        <button class="filter-btn">Price</button>
+      </div>
 
-        <select onchange="location = this.value" class="sort-select">
-          <option value="{{ collection.url }}">Sort</option>
-          <option value="{{ collection.url }}?sort_by=best-selling">Best Selling</option>
-          <option value="{{ collection.url }}?sort_by=price-ascending">Price ↑</option>
-          <option value="{{ collection.url }}?sort_by=price-descending">Price ↓</option>
-          <option value="{{ collection.url }}?sort_by=created-descending">Newest</option>
-        </select>
+      <div class="filter-item">
+        <button class="filter-btn">Size</button>
+      </div>
+
+      <div class="filter-item">
+        <button class="filter-btn">Color</button>
       </div>
 
     </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="filters-right">
+      <span class="results-count">
+        {{ collection.products.size }} items
+      </span>
+
+      <select class="sort-select" onchange="location = this.value">
+        <option value="{{ collection.url }}">Sort</option>
+        <option value="{{ collection.url }}?sort_by=best-selling">Best Selling</option>
+        <option value="{{ collection.url }}?sort_by=price-ascending">Price ↑</option>
+        <option value="{{ collection.url }}?sort_by=price-descending">Price ↓</option>
+        <option value="{{ collection.url }}?sort_by=created-descending">Newest</option>
+      </select>
+    </div>
+
   </div>
 </section>
 
