@@ -156,21 +156,23 @@ document.addEventListener("DOMContentLoaded", function() {
 {% endschema %}
 
 <style>
-/* ===== FULL WIDTH TOOLBAR ===== */
+/* ================================
+   ROOTBOUND CLEAN TOOLBAR
+================================ */
 
 .collection-toolbar {
   width: 100%;
-  background: #fff;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
 .collection-toolbar-inner {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 22px 2rem;
+  padding: 18px 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -181,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function() {
 .filters-right {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 }
 
 /* FILTER BUTTON */
@@ -190,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function() {
 }
 
 .filter-btn {
-  background: transparent;
+  background: #f6f3ef;
   border: 1px solid rgba(0,0,0,0.12);
   padding: 8px 18px;
   border-radius: 40px;
@@ -200,13 +202,13 @@ document.addEventListener("DOMContentLoaded", function() {
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: .25s ease;
+  transition: .2s ease;
   color: #222;
 }
 
 .filter-btn:hover {
   border-color: #000;
-  background: rgba(0,0,0,0.03);
+  background: #ece7e1;
 }
 
 /* ARROW */
@@ -228,16 +230,16 @@ document.addEventListener("DOMContentLoaded", function() {
   position: absolute;
   top: 115%;
   left: 0;
-  background: #fff;
+  background: #ffffff;
   padding: 18px;
   min-width: 240px;
-  border-radius: 16px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
   opacity: 0;
   visibility: hidden;
   transform: translateY(8px);
   transition: .25s ease;
-  z-index: 500;
+  z-index: 200;
 }
 
 .filter-dropdown.active .filter-content {
@@ -251,10 +253,17 @@ document.addEventListener("DOMContentLoaded", function() {
   appearance: none;
   background: #f6f3ef;
   border: 1px solid rgba(0,0,0,0.12);
-  padding: 8px 34px 8px 14px;
+  padding: 8px 32px 8px 14px;
   border-radius: 40px;
   font-size: 14px;
   cursor: pointer;
+}
+
+/* RESULTS */
+.results-count {
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
 }
 
 /* PRICE SLIDER */
@@ -286,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function() {
   appearance: none;
   height: 18px;
   width: 18px;
-  background: #000;
+  background: #111;
   border-radius: 50%;
   cursor: pointer;
   pointer-events: auto;
@@ -309,9 +318,37 @@ document.addEventListener("DOMContentLoaded", function() {
   width: 100%;
   border-radius: 30px;
   padding: 10px;
-  background: #000;
+  background: #111;
   color: #fff;
   border: none;
+  cursor: pointer;
+}
+
+/* ================================
+   MOBILE CLEAN VERSION
+================================ */
+
+@media (max-width: 768px) {
+
+  .collection-toolbar-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .filters-left {
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+
+  .filters-left::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filters-right {
+    justify-content: space-between;
+  }
+
 }
 
 </style>
