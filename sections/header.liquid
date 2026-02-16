@@ -301,6 +301,27 @@
   font-weight: 500;
 }
 
+/* Remove default button outline */
+.header__menu-toggle {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Remove focus outline (mouse users) */
+.header__menu-toggle:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Optional: Keep accessible focus for keyboard users */
+.header__menu-toggle:focus-visible {
+  outline: 2px solid #c67c4e;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
 
 
