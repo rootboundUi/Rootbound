@@ -1,5 +1,84 @@
+{% paginate collection.products by 12 %}
+
 <section class="collection-products">
   <div class="collection-products__container">
+
+    <!-- FILTER + SORT BAR -->
+    <form method="get" action="{{ collection.url }}">
+      <div class="collection-filters">
+
+        <div class="filters-left">
+          {% for filter in collection.filters %}
+            <details class="filter-dropdown">
+              <summary class="filter-btn">
+                {{ filter.label }}
+              </summary>
+
+              <div class="filter-content">
+
+                {% case filter.type %}
+
+                  {% when 'boolean' or 'list' %}
+                    {% for value in filter.values %}
+                      <label class="filter-option">
+                        <input type="checkbox"
+                          name="{{ value.param_name }}"
+                          value="{{ value.value }}"
+                          {% if value.active %}checked{% endif %}
+                          onchange="this.form.submit()">
+                        {{ value.label }} ({{ value.count }})
+                      </label>
+                    {% endfor %}
+
+                  {% when 'price_range' %}
+                    <div class="price-range">
+                      <input type="number"
+                        name="{{ filter.min_value.param_name }}"
+                        placeholder="Min"
+                        value="{{ filter.min_value.value }}">
+                      <input type="number"
+                        name="{{ filter.max_value.param_name }}"
+                        placeholder="Max"
+                        value="{{ filter.max_value.value }}">
+                      <button type="submit" class="apply-btn">
+                        Apply
+                      </button>
+                    </div>
+
+                {% endcase %}
+
+              </div>
+            </details>
+          {% endfor %}
+        </div>
+
+        <div class="filters-right">
+          <span class="results-count">
+            {{ collection.products_count }} items
+          </span>
+
+          <div class="sort-wrapper">
+            <select class="sort-select"
+              onchange="window.location.href=this.value">
+
+              {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
+
+              {% for option in collection.sort_options %}
+                <option
+                  value="{{ collection.url }}?sort_by={{ option.value }}"
+                  {% if option.value == current_sort %}selected{% endif %}>
+                  {{ option.name }}
+                </option>
+              {% endfor %}
+
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </form>
+
+    <!-- PRODUCTS GRID -->
     {% if collection.products.size > 0 %}
       <div class="products__grid">
         {% for product in collection.products %}
@@ -7,6 +86,7 @@
         {% endfor %}
       </div>
 
+      <!-- PAGINATION -->
       {% if paginate.pages > 1 %}
         <div class="pagination">
           {% if paginate.previous %}
@@ -26,13 +106,18 @@
           {% endif %}
         </div>
       {% endif %}
+
     {% else %}
       <div class="empty-state">
         <p>No products found in this collection.</p>
       </div>
     {% endif %}
+
   </div>
 </section>
+
+{% endpaginate %}
+
 
 {% schema %}
 {
