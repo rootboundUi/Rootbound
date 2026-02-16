@@ -1,36 +1,47 @@
 <section class="collection-products">
   <div class="collection-products__container">
-    {% if collection.products.size > 0 %}
-      <div class="products__grid">
-        {% for product in collection.products %}
-          {% render 'product-card', product: product %}
-        {% endfor %}
-      </div>
 
-      {% if paginate.pages > 1 %}
-        <div class="pagination">
-          {% if paginate.previous %}
-            <a href="{{ paginate.previous.url }}" class="pagination__link">← Previous</a>
-          {% endif %}
+    {% paginate collection.products by section.settings.products_per_page %}
 
-          {% for part in paginate.parts %}
-            {% if part.is_link %}
-              <a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a>
-            {% else %}
-              <span class="pagination__current">{{ part.title }}</span>
-            {% endif %}
+      {% if collection.products.size > 0 %}
+        <div class="products__grid">
+          {% for product in collection.products %}
+            <a href="{{ product.url }}" class="product-card-link">
+              {% render 'product-card', product: product %}
+            </a>
           {% endfor %}
+        </div>
 
-          {% if paginate.next %}
-            <a href="{{ paginate.next.url }}" class="pagination__link">Next →</a>
-          {% endif %}
+        {% if paginate.pages > 1 %}
+          <div class="pagination">
+
+            {% if paginate.previous %}
+              <a href="{{ paginate.previous.url }}" class="pagination__link">← Previous</a>
+            {% endif %}
+
+            {% for part in paginate.parts %}
+              {% if part.is_link %}
+                <a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a>
+              {% else %}
+                <span class="pagination__current">{{ part.title }}</span>
+              {% endif %}
+            {% endfor %}
+
+            {% if paginate.next %}
+              <a href="{{ paginate.next.url }}" class="pagination__link">Next →</a>
+            {% endif %}
+
+          </div>
+        {% endif %}
+
+      {% else %}
+        <div class="empty-state">
+          <p>No products found in this collection.</p>
         </div>
       {% endif %}
-    {% else %}
-      <div class="empty-state">
-        <p>No products found in this collection.</p>
-      </div>
-    {% endif %}
+
+    {% endpaginate %}
+
   </div>
 </section>
 
@@ -52,8 +63,9 @@
 {% endschema %}
 
 <style>
+
 /* ================================
-   PREMIUM CLICKABLE PRODUCT GRID
+   PREMIUM CLICKABLE COLLECTION GRID
 ================================ */
 
 .collection-products__container {
@@ -71,7 +83,7 @@
   margin-bottom: 4rem;
 }
 
-/* MAKE LINK CLEAN */
+/* REMOVE LINK DEFAULT STYLES */
 .product-card-link {
   text-decoration: none;
   color: inherit;
@@ -115,7 +127,7 @@
   transform: scale(1.06);
 }
 
-/* TITLE */
+/* PRODUCT TITLE */
 .product-card-link h3,
 .product-card-link .product-title {
   font-size: 16px;
@@ -140,12 +152,10 @@
   color: #111;
 }
 
-/* ================================
-   VIEW PRODUCT HIGHLIGHT
-================================ */
-
-.product-card-link .view-product,
-.product-card-link a[href*="product"] {
+/* VIEW PRODUCT STYLE (if exists in snippet) */
+.product-card-link .view-product {
+  display: inline-block;
+  margin-top: 0.8rem;
   font-weight: 500;
   color: #111;
   transition: all .25s ease;
@@ -153,6 +163,14 @@
 
 .product-card-link:hover .view-product {
   text-decoration: underline;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #777;
+  font-size: 15px;
 }
 
 /* PAGINATION */
