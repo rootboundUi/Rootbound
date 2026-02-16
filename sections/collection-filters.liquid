@@ -186,24 +186,94 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <style>
 /* ===== FULL WIDTH TOOLBAR ===== */
+/* ==============================
+   DESKTOP TOOLBAR
+============================== */
 
 .collection-toolbar {
   width: 100%;
   background: #fff;
-  position: sticky;
-  top: 0;
-  z-index: 100;
   border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
 .collection-toolbar-inner {
   max-width: 1300px;
   margin: 0 auto;
-  padding: 22px 2rem;
+  padding: 18px 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
+/* Hide mobile button on desktop */
+.mobile-filter-btn {
+  display: none;
+}
+
+/* Results */
+.results-count {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Sort */
+.sort-select {
+  appearance: none;
+  background: #f6f3ef;
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 8px 34px 8px 14px;
+  border-radius: 40px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: .25s ease;
+}
+
+.sort-select:hover {
+  border-color: #000;
+}
+
+/* ==============================
+   CLEAN MOBILE VERSION
+============================== */
+
+@media (max-width: 768px) {
+
+  .collection-toolbar {
+    background: #f6f3ef;
+  }
+
+  .collection-toolbar-inner {
+    padding: 14px 16px;
+    gap: 10px;
+  }
+
+  .mobile-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(0,0,0,0.15);
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    background: #fff;
+    cursor: pointer;
+  }
+
+  .results-count {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .sort-select {
+    padding: 6px 28px 6px 12px;
+    font-size: 13px;
+    background: #fff;
+  }
+
+}
+
 
 /* ALIGNMENT */
 .filters-left,
@@ -341,46 +411,6 @@ document.addEventListener("DOMContentLoaded", function() {
   background: #000;
   color: #fff;
   border: none;
-}
-/* ==============================
-   CLEAN MOBILE VERSION
-============================== */
-
-@media (max-width: 768px) {
-
-  .collection-toolbar {
-    background: #f6f3ef;
-  }
-
-  .collection-toolbar-inner {
-    padding: 14px 16px;
-    gap: 10px;
-  }
-
-  .mobile-filter-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    border: 1px solid rgba(0,0,0,0.15);
-    padding: 8px 16px;
-    border-radius: 40px;
-    font-size: 14px;
-    font-weight: 500;
-    background: #fff;
-    cursor: pointer;
-  }
-
-  .results-count {
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  .sort-select {
-    padding: 6px 28px 6px 12px;
-    font-size: 13px;
-    background: #fff;
-  }
-
 }
 
 </style>
