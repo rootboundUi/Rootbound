@@ -1,112 +1,96 @@
 <form method="get" action="{{ collection.url }}" id="CollectionFiltersForm">
 
+  <!-- FULL WIDTH TOOLBAR -->
   <div class="collection-toolbar">
+    <div class="collection-toolbar-inner">
 
-    <!-- LEFT SIDE FILTERS -->
-    <div class="filters-left">
-      {% for filter in collection.filters %}
-        <div class="filter-dropdown">
-          <button type="button" class="filter-btn">
-            {{ filter.label }}
-            <span class="arrow"></span>
-          </button>
+      <!-- LEFT FILTERS -->
+      <div class="filters-left">
+        {% for filter in collection.filters %}
+          <div class="filter-dropdown">
+            <button type="button" class="filter-btn">
+              {{ filter.label }}
+              <span class="arrow"></span>
+            </button>
 
-          <div class="filter-content">
-            {% case filter.type %}
+            <div class="filter-content">
+              {% case filter.type %}
 
-              {% when 'boolean' or 'list' %}
-                {% for value in filter.values %}
-                  <label class="filter-option">
-                    <input type="checkbox"
-                      name="{{ value.param_name }}"
-                      value="{{ value.value }}"
-                      {% if value.active %}checked{% endif %}
-                      onchange="this.form.submit()">
-                    {{ value.label }}
-                  </label>
-                {% endfor %}
+                {% when 'boolean' or 'list' %}
+                  {% for value in filter.values %}
+                    <label class="filter-option">
+                      <input type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value }}"
+                        {% if value.active %}checked{% endif %}
+                        onchange="this.form.submit()">
+                      {{ value.label }}
+                    </label>
+                  {% endfor %}
 
-             {% when 'price_range' %}
+                {% when 'price_range' %}
+                <div class="price-slider">
 
-<div class="price-slider">
+                  <div class="slider-track"></div>
 
-  <div class="slider-track"></div>
+                  <input type="range"
+                    min="{{ filter.range_min | money_without_currency | replace: ',', '' }}"
+                    max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                    value="{{ filter.min_value.value | default: filter.range_min }}"
+                    id="minRange"
+                    class="range-input">
 
-  <input type="range"
-    min="{{ filter.range_min | money_without_currency | replace: ',', '' }}"
-    max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
-    value="{{ filter.min_value.value | default: filter.range_min }}"
-    id="minRange"
-    class="range-input">
+                  <input type="range"
+                    min="{{ filter.range_min | money_without_currency | replace: ',', '' }}"
+                    max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
+                    value="{{ filter.max_value.value | default: filter.range_max }}"
+                    id="maxRange"
+                    class="range-input">
 
-  <input type="range"
-    min="{{ filter.range_min | money_without_currency | replace: ',', '' }}"
-    max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"
-    value="{{ filter.max_value.value | default: filter.range_max }}"
-    id="maxRange"
-    class="range-input">
+                  <div class="price-values">
+                    <span id="minValue"></span>
+                    <span id="maxValue"></span>
+                  </div>
 
-  <div class="price-values">
-    <span id="minValue"></span>
-    <span id="maxValue"></span>
-  </div>
+                  <input type="hidden" name="{{ filter.min_value.param_name }}" id="minPrice">
+                  <input type="hidden" name="{{ filter.max_value.param_name }}" id="maxPrice">
 
-  <input type="hidden" name="{{ filter.min_value.param_name }}" id="minPrice">
-  <input type="hidden" name="{{ filter.max_value.param_name }}" id="maxPrice">
+                  <button type="submit" class="apply-btn">Apply</button>
+                </div>
 
-  <button type="submit" class="apply-btn">Apply</button>
-
-</div>
-
-
-            {% endcase %}
+              {% endcase %}
+            </div>
           </div>
-        </div>
-      {% endfor %}
-    </div>
-
-    <!-- RIGHT SIDE -->
-    <div class="filters-right">
-      <span class="results-count">
-        {{ collection.products_count }} items
-      </span>
-
-      <select class="sort-select"
-        onchange="window.location.href=this.value">
-        {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
-        {% for option in collection.sort_options %}
-          <option value="{{ collection.url }}?sort_by={{ option.value }}"
-            {% if option.value == current_sort %}selected{% endif %}>
-            {{ option.name }}
-          </option>
         {% endfor %}
-      </select>
-    </div>
+      </div>
 
+      <!-- RIGHT SIDE -->
+      <div class="filters-right">
+        <span class="results-count">
+          {{ collection.products_count }} items
+        </span>
+
+        <select class="sort-select"
+          onchange="window.location.href=this.value">
+          {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
+          {% for option in collection.sort_options %}
+            <option value="{{ collection.url }}?sort_by={{ option.value }}"
+              {% if option.value == current_sort %}selected{% endif %}>
+              {{ option.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+    </div>
   </div>
 
-  <!-- ACTIVE FILTER TAGS -->
-  {% if collection.filters != blank %}
-    <div class="active-filters">
-      {% for filter in collection.filters %}
-        {% for value in filter.active_values %}
-          <a href="{{ value.url_to_remove }}" class="active-pill">
-            {{ value.label }} ✕
-          </a>
-        {% endfor %}
-      {% endfor %}
-
-      {% if collection.current_vendor or collection.current_type or collection.current_tags %}
-        <a href="{{ collection.url }}" class="clear-all">
-          Clear all
-        </a>
-      {% endif %}
-    </div>
-  {% endif %}
-
+</form>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
+
+  /* DROPDOWN */
   const dropdowns = document.querySelectorAll(".filter-dropdown");
 
   dropdowns.forEach(drop => {
@@ -120,11 +104,8 @@ document.addEventListener("DOMContentLoaded", function() {
   document.addEventListener("click", function() {
     dropdowns.forEach(drop => drop.classList.remove("active"));
   });
-});
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
 
+  /* PRICE SLIDER */
   const minRange = document.getElementById("minRange");
   const maxRange = document.getElementById("maxRange");
   const minValue = document.getElementById("minValue");
@@ -136,7 +117,6 @@ document.addEventListener("DOMContentLoaded", function() {
   if (!minRange) return;
 
   function updateSlider() {
-
     let min = parseInt(minRange.value);
     let max = parseInt(maxRange.value);
 
@@ -169,12 +149,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 </script>
-
-
-</form>
-
-
-
 
 {% schema %}
 {
