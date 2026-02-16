@@ -52,53 +52,47 @@
 {% endschema %}
 
 <style>
-/* ================================
+/* =================================
    LUXURY MINIMAL COLLECTION GRID
-================================ */
+================================= */
 
 .collection-products__container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 2.5rem 1.5rem 5rem;
-  background: #faf8f5;
+  padding: 3rem 1.5rem 6rem;
+  background: #f8f6f2; /* luxury light beige */
 }
 
-/* ================================
-   GRID
-================================ */
+/* ================= GRID ================= */
 
 .products__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 3rem;
-  margin-bottom: 4rem;
 }
 
-/* ================================
-   PRODUCT CARD BASE
-================================ */
+/* ================= CARD ================= */
 
 .products__grid > * {
   background: #ffffff;
   border-radius: 20px;
-  padding: 1.2rem;
+  padding: 1.4rem;
   position: relative;
   overflow: hidden;
 
   box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+  transition: all .5s cubic-bezier(.22,.61,.36,1);
 
   opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 0.8s ease forwards;
+  transform: translateY(20px);
+  animation: fadeUp .8s ease forwards;
 }
 
-/* Stagger animation */
-.products__grid > *:nth-child(2) { animation-delay: .05s; }
-.products__grid > *:nth-child(3) { animation-delay: .1s; }
-.products__grid > *:nth-child(4) { animation-delay: .15s; }
-.products__grid > *:nth-child(5) { animation-delay: .2s; }
+/* stagger effect */
+.products__grid > *:nth-child(2) { animation-delay: .1s; }
+.products__grid > *:nth-child(3) { animation-delay: .2s; }
+.products__grid > *:nth-child(4) { animation-delay: .3s; }
 
-/* Fade animation */
 @keyframes fadeUp {
   to {
     opacity: 1;
@@ -106,73 +100,25 @@
   }
 }
 
-/* ================================
-   IMAGE
-================================ */
+/* Hover Lift */
+.products__grid > *:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+}
+
+/* ================= IMAGE ================= */
 
 .products__grid img {
   width: 100%;
   border-radius: 16px;
-  transition: transform .6s cubic-bezier(.22,.61,.36,1);
-}
-
-/* Overlay */
-.products__grid > *::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0) 60%,
-    rgba(0,0,0,0.05)
-  );
-  opacity: 0;
-  transition: opacity .4s ease;
-  pointer-events: none;
-}
-
-/* Hover effects */
-.products__grid > *:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+  transition: transform .8s ease;
 }
 
 .products__grid > *:hover img {
   transform: scale(1.08);
 }
 
-.products__grid > *:hover::before {
-  opacity: 1;
-}
-
-/* ================================
-   QUICK VIEW BUTTON
-================================ */
-
-.products__grid > *::after {
-  content: "Quick View";
-  position: absolute;
-  bottom: 22px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: #111;
-  color: #fff;
-  padding: 8px 20px;
-  border-radius: 40px;
-  font-size: 13px;
-  font-weight: 500;
-  opacity: 0;
-  transition: all .35s ease;
-}
-
-.products__grid > *:hover::after {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* ================================
-   PRODUCT TEXT
-================================ */
+/* ================= TEXT ================= */
 
 .products__grid h3,
 .products__grid .product-title {
@@ -180,8 +126,8 @@
   font-weight: 500;
   margin-top: 1.2rem;
   margin-bottom: 0.4rem;
+  letter-spacing: 0.3px;
   color: #222;
-  letter-spacing: .2px;
 }
 
 .products__grid .price,
@@ -189,37 +135,70 @@
   font-size: 15px;
   font-weight: 600;
   color: #111;
+  letter-spacing: .4px;
 }
 
-/* ================================
-   PAGINATION
-================================ */
+/* ================= HOVER BUTTON ================= */
+
+.products__grid > *::after {
+  content: "View Product";
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #111;
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 40px;
+  font-size: 13px;
+  letter-spacing: .5px;
+  opacity: 0;
+  transition: all .4s ease;
+}
+
+.products__grid > *:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ================= EMPTY STATE ================= */
+
+.empty-state {
+  text-align: center;
+  padding: 5rem 2rem;
+  color: #777;
+  font-size: 16px;
+  letter-spacing: .5px;
+}
+
+/* ================= PAGINATION ================= */
 
 .pagination {
   display: flex;
   justify-content: center;
   gap: 0.8rem;
-  flex-wrap: wrap;
+  margin-top: 4rem;
 }
 
 .pagination__link,
 .pagination__current {
-  padding: 0.6rem 1.4rem;
-  border-radius: 40px;
+  padding: 0.7rem 1.4rem;
+  border-radius: 50px;
+  font-size: 14px;
   border: 1px solid rgba(0,0,0,0.12);
   text-decoration: none;
-  font-size: 14px;
   transition: all .3s ease;
 }
 
 .pagination__link {
-  background: #ffffff;
+  background: #fff;
   color: #222;
 }
 
 .pagination__link:hover {
-  background: #f3eee8;
-  border-color: #000;
+  background: #111;
+  color: #fff;
+  border-color: #111;
 }
 
 .pagination__current {
@@ -228,29 +207,26 @@
   border-color: #111;
 }
 
-/* ================================
-   MOBILE
-================================ */
+/* ================= MOBILE ================= */
 
 @media (max-width: 768px) {
 
   .collection-products__container {
-    padding: 1.5rem 1rem 4rem;
+    padding: 2rem 1rem 4rem;
   }
 
   .products__grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.3rem;
+    gap: 1.4rem;
   }
 
   .products__grid > * {
-    padding: 0.9rem;
+    padding: 1rem;
     border-radius: 16px;
   }
 
-  /* Disable hover overlay on touch */
   .products__grid > *::after {
-    display: none;
+    display: none; /* remove hover button on mobile */
   }
 
 }
