@@ -158,6 +158,58 @@
 {% endschema %}
 
 <style>
+  /* ===============================
+   FIX EMPTY CART LAYOUT
+================================ */
+
+.empty-cart {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem;
+  background: #f7f5f2;
+}
+
+.empty-cart__content {
+  text-align: center;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.empty-cart__icon {
+  width: 120px;        /* FIX HUGE ICON */
+  height: 120px;
+  color: #111;
+  opacity: 0.1;        /* Modern soft look */
+  margin-bottom: 2rem;
+}
+
+.empty-cart__title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.empty-cart__text {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.empty-cart .button--primary {
+  padding: 0.9rem 2rem;
+  border-radius: 50px;
+  background: #111;
+  color: #fff;
+  transition: 0.3s ease;
+}
+
+.empty-cart .button--primary:hover {
+  opacity: 0.9;
+}
+
 /* ===============================
    CLEAN MODERN CART FIX
 ================================ */
