@@ -445,23 +445,122 @@
   opacity: 0.7;
 }
 
-/* MOBILE */
+/* ================================= */
+/* MINIMAL LUXURY MOBILE FOOTER */
+/* ================================= */
+
 @media (max-width: 768px) {
 
+  .footer {
+    padding: 5rem 0 2rem;
+    background: #f9f7f4; /* soft ivory luxury tone */
+  }
+
+  /* Background word — ultra subtle */
   .footer__bg-text {
-    font-size: 100px;
+    font-size: 60px;
     top: 60px;
+    opacity: 0.03;
+    letter-spacing: 4px;
   }
 
+  /* Single clean column */
   .footer__container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    padding: 0 2rem;
   }
 
+  /* Section spacing */
+  .footer__section {
+    align-items: flex-start;
+  }
+
+  .footer__heading {
+    font-size: 11px;
+    letter-spacing: 3px;
+    margin-bottom: 1.4rem;
+    color: #111;
+  }
+
+  .footer__description {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #444;
+  }
+
+  .footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .footer__links a {
+    font-size: 14px;
+    color: #222;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .footer__links a:hover {
+    opacity: 0.6;
+  }
+
+  /* Newsletter — underline style (true luxury look) */
+  .newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    border: none;
+  }
+
+  .newsletter-input {
+    border: none;
+    border-bottom: 1px solid #111;
+    padding: 0.8rem 0;
+    background: transparent;
+    font-size: 14px;
+  }
+
+  .newsletter-input:focus {
+    outline: none;
+    border-bottom: 1px solid #000;
+  }
+
+  .newsletter-button {
+    padding: 0;
+    background: none;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* Social minimal */
+  .social-links {
+    justify-content: flex-start;
+    gap: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  /* Bottom bar refined */
   .footer__bottom {
     flex-direction: column;
+    gap: 1rem;
+    padding: 2rem 2rem 0;
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .payment-methods {
+    justify-content: center;
+    opacity: 0.7;
+  }
+
+  .copyright {
+    font-size: 12px;
+    color: #666;
     text-align: center;
   }
 }
+
 
 </style>
