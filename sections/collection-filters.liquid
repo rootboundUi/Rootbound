@@ -1,77 +1,48 @@
 <section class="collection-filters">
-  <div class="filters__container">
-    <div class="filters__sidebar">
-      <form class="filters-form" id="filters-form" action="{{ collection.url }}">
-        <!-- Price Filter -->
-        <div class="filter-group">
-          <h3 class="filter-title">Price</h3>
-          <div class="price-range">
-            <input 
-              type="number" 
-              name="filter.p.price.gte"
-              placeholder="Min"
-              class="price-input"
-            >
-            <span>-</span>
-            <input 
-              type="number" 
-              name="filter.p.price.lte"
-              placeholder="Max"
-              class="price-input"
-            >
+  <div class="filters-bar">
+
+    <!-- LEFT FILTERS -->
+    <div class="filters-left">
+      {% for filter in collection.filters %}
+        <div class="filter-dropdown">
+          <button class="filter-trigger">
+            {{ filter.label }}
+            <span class="chevron">⌄</span>
+          </button>
+
+          <div class="filter-panel">
+            {% for value in filter.values %}
+              <label>
+                <input 
+                  type="checkbox"
+                  name="filter.{{ filter.param_name }}"
+                  value="{{ value.param_name }}"
+                >
+                {{ value.label }}
+              </label>
+            {% endfor %}
           </div>
         </div>
-
-        <!-- Filter by Available Options -->
-        {% for filter in collection.filters %}
-          {% case filter.type %}
-            {% when "price_range" %}
-              <!-- Handled above -->
-            {% else %}
-              <div class="filter-group">
-                <h3 class="filter-title">{{ filter.label }}</h3>
-                <ul class="filter-options">
-                  {% for filter_value in filter.values %}
-                    <li>
-                      <label class="filter-label">
-                        <input 
-                          type="checkbox" 
-                          name="filter.{{ filter.param_name }}"
-                          value="{{ filter_value.param_name }}"
-                          {{ filter_value.active | default: false }}
-                        >
-                        <span>{{ filter_value.label }}</span>
-                      </label>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </div>
-          {% endcase %}
-        {% endfor %}
-
-        <button type="submit" class="button button--primary">Apply Filters</button>
-      </form>
+      {% endfor %}
     </div>
 
-    <!-- Sort & Results -->
-    <div class="filters__main">
-      <div class="filters__header">
-        <p class="results-count">
-          Showing {{ collection.products.size }} products
-        </p>
-        <select id="sort-select" onchange="location = this.value">
-          <option value="{{ collection.url }}">Sort by</option>
-          <option value="{{ collection.url }}?sort_by=best-selling">Best Selling</option>
-          <option value="{{ collection.url }}?sort_by=title-ascending">A-Z</option>
-          <option value="{{ collection.url }}?sort_by=title-descending">Z-A</option>
-          <option value="{{ collection.url }}?sort_by=price-ascending">Price: Low to High</option>
-          <option value="{{ collection.url }}?sort_by=price-descending">Price: High to Low</option>
-          <option value="{{ collection.url }}?sort_by=created-descending">Newest</option>
-        </select>
-      </div>
+    <!-- RIGHT SIDE -->
+    <div class="filters-right">
+      <span class="results-count">
+        {{ collection.products.size }} items
+      </span>
+
+      <select class="sort-select" onchange="location = this.value">
+        <option value="{{ collection.url }}">Sort</option>
+        <option value="{{ collection.url }}?sort_by=best-selling">Best Selling</option>
+        <option value="{{ collection.url }}?sort_by=price-ascending">Price ↑</option>
+        <option value="{{ collection.url }}?sort_by=price-descending">Price ↓</option>
+      </select>
     </div>
+
   </div>
 </section>
+
 
 {% schema %}
 {
