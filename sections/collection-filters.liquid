@@ -157,21 +157,27 @@ document.addEventListener("DOMContentLoaded", function() {
 {% endschema %}
 
 <style>
-/* ================================
-   ROOTBOUND PREMIUM TOOLBAR
-================================ */
+/* ===== FULL WIDTH TOOLBAR ===== */
 
 .collection-toolbar {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 22px 2rem 18px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  width: 100%;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
   border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
-/* LEFT + RIGHT ALIGNMENT */
+.collection-toolbar-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 22px 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ALIGNMENT */
 .filters-left,
 .filters-right {
   display: flex;
@@ -179,62 +185,46 @@ document.addEventListener("DOMContentLoaded", function() {
   gap: 14px;
 }
 
-/* ================================
-   FILTER BUTTONS (Luxury Style)
-================================ */
-
+/* FILTER BUTTON */
 .filter-dropdown {
   position: relative;
 }
 
 .filter-btn {
   background: transparent;
-  border: 1px solid rgb(5, 0, 0);
+  border: 1px solid rgba(0,0,0,0.12);
   padding: 8px 18px;
   border-radius: 40px;
   font-size: 14px;
   font-weight: 500;
-  letter-spacing: .2px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: all .25s ease;
+  transition: .25s ease;
   color: #222;
 }
 
-/* Hover = subtle lift */
 .filter-btn:hover {
   border-color: #000;
   background: rgba(0,0,0,0.03);
-  transform: translateY(-1px);
 }
 
-/* Focus Accessibility */
-.filter-btn:focus-visible,
-.sort-select:focus-visible {
-  outline: 2px solid #000;
-  outline-offset: 3px;
-}
-
-/* Arrow */
+/* ARROW */
 .arrow {
   width: 6px;
   height: 6px;
   border-right: 2px solid #222;
   border-bottom: 2px solid #222;
   transform: rotate(45deg);
-  transition: transform .3s ease;
+  transition: .3s ease;
 }
 
 .filter-dropdown.active .arrow {
   transform: rotate(-135deg);
 }
 
-/* ================================
-   DROPDOWN PANEL
-================================ */
-
+/* DROPDOWN PANEL */
 .filter-content {
   position: absolute;
   top: 115%;
@@ -247,8 +237,8 @@ document.addEventListener("DOMContentLoaded", function() {
   opacity: 0;
   visibility: hidden;
   transform: translateY(8px);
-  transition: all .25s ease;
-  z-index: 200;
+  transition: .25s ease;
+  z-index: 500;
 }
 
 .filter-dropdown.active .filter-content {
@@ -257,148 +247,24 @@ document.addEventListener("DOMContentLoaded", function() {
   transform: translateY(0);
 }
 
-.filter-option {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  color: #444;
-}
-
-.filter-option input {
-  margin-right: 6px;
-}
-
-/* ================================
-   SORT DROPDOWN (Premium)
-================================ */
-
+/* SORT */
 .sort-select {
   appearance: none;
-  background: #f6f3ef; /* matches your header tone */
+  background: #f6f3ef;
   border: 1px solid rgba(0,0,0,0.12);
   padding: 8px 34px 8px 14px;
   border-radius: 40px;
   font-size: 14px;
-  font-weight: 500;
   cursor: pointer;
-  transition: .25s ease;
-  color: #222;
 }
 
-.sort-select:hover {
-  border-color: #000;
-  background: #f1ede8;
-}
-
-.results-count {
-  font-size: 13px;
-  color: #555;
-  margin-right: 8px;
-}
-
-/* ================================
-   ACTIVE FILTER PILLS
-================================ */
-
-.active-filters {
-  max-width: 1200px;
-  margin: 12px auto 0;
-  padding: 0 2rem;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.active-pill {
-  background: #f6f3ef;
-  border: 1px solid rgba(0,0,0,0.15);
-  padding: 6px 14px;
-  border-radius: 40px;
-  font-size: 12px;
-  text-decoration: none;
-  color: #222;
-  transition: .25s ease;
-}
-
-.active-pill:hover {
-  background: #000;
-  color: #fff;
-}
-
-.clear-all {
-  font-size: 12px;
-  text-decoration: underline;
-  color: #666;
-  margin-left: 6px;
-  transition: .25s ease;
-}
-
-.clear-all:hover {
-  color: #000;
-}
-
-/* ================================
-   DARK MODE SUPPORT
-================================ */
-
-@media (prefers-color-scheme: dark) {
-
-  .collection-toolbar {
-    border-color: rgba(255,255,255,0.1);
-  }
-
-  .filter-btn {
-    border-color: rgba(255,255,255,0.2);
-    color: #eee;
-  }
-
-  .filter-content {
-    background:rgb(255, 255, 255);
-    color: #eee;
-  }
-
-  .sort-select {
-    background:rgb(255, 255, 255);
-    border-color: rgba(255,255,255,0.2);
-    color: #eee;
-  }
-
-  .active-pill {
-    background: #222;
-    border-color: rgba(255,255,255,0.2);
-    color: #eee;
-  }
-}
-
-/* ================================
-   MOBILE LAYOUT
-================================ */
-
-@media (max-width: 768px) {
-
-  .collection-toolbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
-  }
-
-  .filters-left {
-    flex-wrap: wrap;
-  }
-
-}
-/* ============================
-   PREMIUM PRICE RANGE SLIDER
-============================ */
-
+/* PRICE SLIDER */
 .price-slider {
   position: relative;
   width: 100%;
   padding: 20px 0 10px;
 }
 
-/* Track background */
 .slider-track {
   position: absolute;
   height: 4px;
@@ -408,7 +274,6 @@ document.addEventListener("DOMContentLoaded", function() {
   top: 26px;
 }
 
-/* Range Inputs */
 .range-input {
   position: absolute;
   width: 100%;
@@ -418,7 +283,6 @@ document.addEventListener("DOMContentLoaded", function() {
   pointer-events: none;
 }
 
-/* Thumb */
 .range-input::-webkit-slider-thumb {
   appearance: none;
   height: 18px;
@@ -427,31 +291,12 @@ document.addEventListener("DOMContentLoaded", function() {
   border-radius: 50%;
   cursor: pointer;
   pointer-events: auto;
-  transition: transform .2s ease;
 }
 
-.range-input::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-}
-
-.range-input::-moz-range-thumb {
-  height: 18px;
-  width: 18px;
-  background: #000;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-/* Remove default track */
 .range-input::-webkit-slider-runnable-track {
   background: transparent;
 }
 
-.range-input::-moz-range-track {
-  background: transparent;
-}
-
-/* Price values */
 .price-values {
   display: flex;
   justify-content: space-between;
@@ -460,13 +305,14 @@ document.addEventListener("DOMContentLoaded", function() {
   color: #444;
 }
 
-/* Apply button */
-.price-slider .apply-btn {
+.apply-btn {
   margin-top: 12px;
   width: 100%;
   border-radius: 30px;
   padding: 10px;
+  background: #000;
+  color: #fff;
+  border: none;
 }
-
 
 </style>
