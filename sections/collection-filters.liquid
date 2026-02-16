@@ -96,19 +96,16 @@ document.addEventListener("DOMContentLoaded", function() {
       e.preventDefault();
       e.stopPropagation();
 
-      const isActive = drop.classList.contains("active");
+      const alreadyOpen = drop.classList.contains("active");
 
-      // close all
       dropdowns.forEach(d => d.classList.remove("active"));
 
-      // reopen if previously closed
-      if (!isActive) {
+      if (!alreadyOpen) {
         drop.classList.add("active");
       }
     });
   });
 
-  // close when tapping outside
   document.addEventListener("click", function(e) {
     if (!e.target.closest(".filter-dropdown")) {
       dropdowns.forEach(drop => drop.classList.remove("active"));
@@ -117,6 +114,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 </script>
+
 
 
 </form>
