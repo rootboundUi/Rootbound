@@ -193,6 +193,31 @@
   color: rgba(255,255,255,0.9);
   max-width: 520px;
 }
+.lux-hero__title,
+.lux-hero__subtitle,
+.lux-button {
+  opacity: 0;
+  transform: translateY(25px);
+}
+
+.lux-hero__title {
+  animation: luxFadeUp 1s cubic-bezier(.22,.61,.36,1) forwards;
+}
+
+.lux-hero__subtitle {
+  animation: luxFadeUp 1s cubic-bezier(.22,.61,.36,1) 0.2s forwards;
+}
+
+.lux-button {
+  animation: luxFadeUp 1s cubic-bezier(.22,.61,.36,1) 0.4s forwards;
+}
+
+@keyframes luxFadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 
 /* ============================= */
