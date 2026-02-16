@@ -127,99 +127,185 @@ document.addEventListener("DOMContentLoaded", function() {
 {% endschema %}
 
 <style>
-/* ========================== */
-/* MODERN FILTER BAR */
-/* ========================== */
+/* ===========================
+   PREMIUM FILTER + SORT BAR
+   =========================== */
 
 .collection-filters {
-  background:rgb(255, 255, 255); /* soft luxury tone */
-  padding: 1.2rem 0;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  background: #fff;
+  padding: 1.8rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  font-family: 'Inter', sans-serif;
 }
 
 .filters-wrapper {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
   padding: 0 2rem;
-
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-
-/* LEFT SIDE */
-.filters-left {
-  display: flex;
-  gap: 2.5rem;
-  align-items: center;
-}
-
-/* FILTER BUTTON */
-.filter-btn {
-  background: none;
-  border: none;
-  font-size: 14px;
-  font-weight: 500;
-  color: #222;
-  cursor: pointer;
-  position: relative;
-  padding-bottom: 4px;
-  transition: all 0.3s ease;
-}
-
-/* Underline hover effect */
-.filter-btn::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
-  height: 1px;
-  background: #111;
-  transition: width 0.3s ease;
-}
-
-.filter-btn:hover::after {
-  width: 100%;
-}
-
-/* RIGHT SIDE */
-.filters-right {
-  display: flex;
   align-items: center;
   gap: 2rem;
 }
 
-.results-count {
+/* ===== FILTER BUTTONS ===== */
+.filter-dropdown {
+  position: relative;
+}
+
+.filter-btn {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.14);
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #222;
+  border-radius: 32px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.28s ease;
+}
+
+.filter-btn:hover {
+  background: rgba(0,0,0,0.02);
+  border-color: #111;
+  transform: translateY(-2px);
+}
+
+/* Arrow indicator */
+.filter-btn .arrow {
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid #222;
+  border-bottom: 2px solid #222;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+}
+
+.filter-dropdown.active .arrow {
+  transform: rotate(-135deg);
+}
+
+/* Dropdown panel */
+.filter-content {
+  position: absolute;
+  top: 140%;
+  left: 0;
+  background: #fff;
+  padding: 1.4rem;
+  min-width: 260px;
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.09);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: all 0.28s ease;
+  pointer-events: none;
+  z-index: 120;
+}
+
+.filter-dropdown.active .filter-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Filter options */
+.filter-option {
   font-size: 13px;
-  color: #666;
+  margin-bottom: 10px;
+  display: block;
+  cursor: pointer;
+  color: #333;
+  transition: 0.22s ease;
+}
+.filter-option:hover {
+  color: #000;
+}
+
+/* Input boxes inside filters */
+.filter-content input[type="number"],
+.filter-content input[type="text"] {
+  width: 85px;
+  padding: 8px 10px;
+  font-size: 13px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-right: 8px;
+  transition: border 0.25s ease;
+}
+.filter-content input:focus {
+  border-color: #111;
+  outline: none;
+}
+
+/* Apply button */
+.apply-btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  font-size: 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.28s ease;
+}
+.apply-btn:hover {
+  background: #222;
+  transform: translateY(-1px);
+}
+
+/* ===== SORT DROPDOWN ===== */
+.sort-wrapper {
+  position: relative;
 }
 
 .sort-select {
-  border: none;
-  background: none;
+  appearance: none;
+  background: #f7f5f2;
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 10px 36px 10px 14px;
+  border-radius: 30px;
   font-size: 14px;
-  cursor: pointer;
+  font-weight: 500;
   color: #222;
+  cursor: pointer;
+  transition: 0.28s ease;
 }
 
-/* MOBILE */
-@media (max-width: 768px) {
+.sort-select:hover {
+  border-color: #111;
+  transform: translateY(-1px);
+}
 
+/* Arrow for sort */
+.sort-wrapper::after {
+  content: "▾";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 12px;
+  color: #333;
+}
+
+/* Results count */
+.results-count {
+  font-size: 13px;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Responsive small screen */
+@media (max-width: 768px) {
   .filters-wrapper {
     flex-direction: column;
     gap: 1rem;
-    align-items: center;
-  }
-
-  .filters-left {
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .filters-right {
-    justify-content: center;
+    align-items: flex-start;
   }
 }
 
