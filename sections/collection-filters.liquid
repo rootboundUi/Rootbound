@@ -116,72 +116,72 @@ document.addEventListener("DOMContentLoaded", function() {
 {% endschema %}
 
 <style>
-/* ==========================
-   COLLECTION TOOLBAR
-========================== */
+/* ================================
+   ROOTBOUND PREMIUM TOOLBAR
+================================ */
 
 .collection-toolbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 22px 2rem 18px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 2rem;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
-.filters-left {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
+/* LEFT + RIGHT ALIGNMENT */
+.filters-left,
 .filters-right {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 14px;
 }
 
-/* ==========================
-   FILTER BUTTON
-========================== */
+/* ================================
+   FILTER BUTTONS (Luxury Style)
+================================ */
 
 .filter-dropdown {
   position: relative;
 }
 
 .filter-btn {
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.15);
-  padding: 9px 18px;
+  background: transparent;
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 8px 18px;
   border-radius: 40px;
   font-size: 14px;
   font-weight: 500;
+  letter-spacing: .2px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
   transition: all .25s ease;
+  color: #222;
 }
 
-/* Focus accessibility */
+/* Hover = subtle lift */
+.filter-btn:hover {
+  border-color: #000;
+  background: rgba(0,0,0,0.03);
+  transform: translateY(-1px);
+}
+
+/* Focus Accessibility */
 .filter-btn:focus-visible,
 .sort-select:focus-visible {
   outline: 2px solid #000;
   outline-offset: 3px;
 }
 
-/* Hover */
-.filter-btn:hover {
-  border-color: #000;
-  transform: translateY(-2px);
-}
-
 /* Arrow */
 .arrow {
   width: 6px;
   height: 6px;
-  border-right: 2px solid #000;
-  border-bottom: 2px solid #000;
+  border-right: 2px solid #222;
+  border-bottom: 2px solid #222;
   transform: rotate(45deg);
   transition: transform .3s ease;
 }
@@ -190,20 +190,24 @@ document.addEventListener("DOMContentLoaded", function() {
   transform: rotate(-135deg);
 }
 
-/* Dropdown */
+/* ================================
+   DROPDOWN PANEL
+================================ */
+
 .filter-content {
   position: absolute;
-  top: 120%;
+  top: 115%;
   left: 0;
   background: #fff;
-  padding: 1.3rem;
+  padding: 18px;
+  min-width: 240px;
   border-radius: 16px;
-  box-shadow: 0 25px 70px rgba(0,0,0,0.12);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.08);
   opacity: 0;
   visibility: hidden;
   transform: translateY(8px);
-  transition: .25s ease;
-  z-index: 100;
+  transition: all .25s ease;
+  z-index: 200;
 }
 
 .filter-dropdown.active .filter-content {
@@ -214,107 +218,132 @@ document.addEventListener("DOMContentLoaded", function() {
 
 .filter-option {
   display: block;
-  margin-bottom: 8px;
   font-size: 13px;
+  margin-bottom: 10px;
   cursor: pointer;
+  color: #444;
 }
 
-/* ==========================
-   SORT
-========================== */
+.filter-option input {
+  margin-right: 6px;
+}
+
+/* ================================
+   SORT DROPDOWN (Premium)
+================================ */
 
 .sort-select {
   appearance: none;
+  background: #f6f3ef; /* matches your header tone */
+  border: 1px solid rgba(0,0,0,0.12);
+  padding: 8px 34px 8px 14px;
   border-radius: 40px;
-  padding: 9px 30px 9px 14px;
-  border: 1px solid rgba(0,0,0,0.15);
-  background: #f7f5f2;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
   transition: .25s ease;
+  color: #222;
 }
 
 .sort-select:hover {
   border-color: #000;
+  background: #f1ede8;
 }
 
-/* ==========================
+.results-count {
+  font-size: 13px;
+  color: #555;
+  margin-right: 8px;
+}
+
+/* ================================
    ACTIVE FILTER PILLS
-========================== */
+================================ */
 
 .active-filters {
+  max-width: 1200px;
+  margin: 12px auto 0;
+  padding: 0 2rem;
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  padding: 1rem 0;
 }
 
 .active-pill {
-  background: #000;
-  color: #fff;
+  background: #f6f3ef;
+  border: 1px solid rgba(0,0,0,0.15);
   padding: 6px 14px;
   border-radius: 40px;
   font-size: 12px;
   text-decoration: none;
+  color: #222;
   transition: .25s ease;
 }
 
 .active-pill:hover {
-  background: #222;
-}
-
-.clear-all {
-  padding: 6px 14px;
-  border-radius: 40px;
-  border: 1px solid #000;
-  text-decoration: none;
-  font-size: 12px;
-  transition: .25s ease;
-}
-
-.clear-all:hover {
   background: #000;
   color: #fff;
 }
 
-/* ==========================
-   DARK MODE
-========================== */
+.clear-all {
+  font-size: 12px;
+  text-decoration: underline;
+  color: #666;
+  margin-left: 6px;
+  transition: .25s ease;
+}
+
+.clear-all:hover {
+  color: #000;
+}
+
+/* ================================
+   DARK MODE SUPPORT
+================================ */
 
 @media (prefers-color-scheme: dark) {
+
   .collection-toolbar {
     border-color: rgba(255,255,255,0.1);
   }
 
-  .filter-btn,
-  .sort-select {
-    background: #111;
+  .filter-btn {
     border-color: rgba(255,255,255,0.2);
-    color: #fff;
+    color: #eee;
   }
 
   .filter-content {
     background: #1a1a1a;
-    color: #fff;
+    color: #eee;
+  }
+
+  .sort-select {
+    background: #1a1a1a;
+    border-color: rgba(255,255,255,0.2);
+    color: #eee;
   }
 
   .active-pill {
-    background: #fff;
-    color: #000;
+    background: #222;
+    border-color: rgba(255,255,255,0.2);
+    color: #eee;
   }
 }
 
-/* ==========================
-   MOBILE SLIDE-IN
-========================== */
+/* ================================
+   MOBILE LAYOUT
+================================ */
 
 @media (max-width: 768px) {
 
-  .filters-left {
-    display: none;
+  .collection-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
   }
 
-  .mobile-filter-btn {
-    display: inline-block;
+  .filters-left {
+    flex-wrap: wrap;
   }
 
 }
