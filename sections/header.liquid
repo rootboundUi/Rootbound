@@ -84,6 +84,24 @@
   </div>
 
 </header>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+  const trigger = document.querySelector(".search-trigger");
+  const searchBar = document.querySelector(".search-bar");
+  const closeBtn = document.querySelector(".search-close");
+
+  trigger.addEventListener("click", function() {
+    searchBar.classList.add("active");
+    document.querySelector(".search-input").focus();
+  });
+
+  closeBtn.addEventListener("click", function() {
+    searchBar.classList.remove("active");
+  });
+
+});
+</script>
 
 
 {% schema %}
