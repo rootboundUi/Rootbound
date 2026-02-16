@@ -310,32 +310,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
   .filters-left {
     display: flex;
-    flex-wrap: wrap;
     gap: 10px;
-    overflow: visible; /* IMPORTANT FIX */
+    flex-wrap: wrap;
+    overflow: visible !important;
   }
 
   .filter-dropdown {
     position: relative;
-    flex: 1 1 auto;
   }
 
   .filter-content {
-    position: absolute;
-    left: 0;
-    right: auto;
-    width: 100%;
-    min-width: 220px;
-    z-index: 9999; /* IMPORTANT FIX */
-  }
-
-  .filters-right {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: fixed; /* KEY FIX */
+    left: 16px;
+    right: 16px;
+    top: auto;
+    margin-top: 12px;
+    min-width: unset;
   }
 
 }
-
 
 </style>
