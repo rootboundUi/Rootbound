@@ -53,58 +53,121 @@
 
 <style>
 /* ================================
-   COLLECTION GRID – PREMIUM LIGHT
+   LUXURY MINIMAL COLLECTION GRID
 ================================ */
 
 .collection-products__container {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 2rem 1.5rem 5rem;
-  background: #faf8f5; /* soft light tone */
+  padding: 2.5rem 1.5rem 5rem;
+  background: #faf8f5;
 }
 
 /* ================================
-   PRODUCT GRID
+   GRID
 ================================ */
 
 .products__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 2.5rem;
-  margin-bottom: 3.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 3rem;
+  margin-bottom: 4rem;
 }
 
 /* ================================
-   PRODUCT CARD STYLING
+   PRODUCT CARD BASE
 ================================ */
 
-/* This targets your rendered product-card wrapper */
 .products__grid > * {
   background: #ffffff;
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 1.2rem;
-  transition: all 0.35s cubic-bezier(.22,.61,.36,1);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
   position: relative;
   overflow: hidden;
+
+  box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s ease forwards;
 }
 
-/* Hover effect */
-.products__grid > *:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 45px rgba(0,0,0,0.08);
+/* Stagger animation */
+.products__grid > *:nth-child(2) { animation-delay: .05s; }
+.products__grid > *:nth-child(3) { animation-delay: .1s; }
+.products__grid > *:nth-child(4) { animation-delay: .15s; }
+.products__grid > *:nth-child(5) { animation-delay: .2s; }
+
+/* Fade animation */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Image inside card */
+/* ================================
+   IMAGE
+================================ */
+
 .products__grid img {
   width: 100%;
-  border-radius: 14px;
-  transition: transform 0.5s ease;
+  border-radius: 16px;
+  transition: transform .6s cubic-bezier(.22,.61,.36,1);
 }
 
-/* Image zoom on hover */
+/* Overlay */
+.products__grid > *::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,0) 60%,
+    rgba(0,0,0,0.05)
+  );
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+
+/* Hover effects */
+.products__grid > *:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+}
+
 .products__grid > *:hover img {
-  transform: scale(1.05);
+  transform: scale(1.08);
+}
+
+.products__grid > *:hover::before {
+  opacity: 1;
+}
+
+/* ================================
+   QUICK VIEW BUTTON
+================================ */
+
+.products__grid > *::after {
+  content: "Quick View";
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #111;
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 40px;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0;
+  transition: all .35s ease;
+}
+
+.products__grid > *:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* ================================
@@ -113,33 +176,23 @@
 
 .products__grid h3,
 .products__grid .product-title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   margin-bottom: 0.4rem;
   color: #222;
+  letter-spacing: .2px;
 }
 
 .products__grid .price,
 .products__grid .product-price {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: #111;
 }
 
 /* ================================
-   EMPTY STATE
-================================ */
-
-.empty-state {
-  text-align: center;
-  padding: 4rem 2rem;
-  color: #777;
-  font-size: 15px;
-}
-
-/* ================================
-   PAGINATION – PREMIUM STYLE
+   PAGINATION
 ================================ */
 
 .pagination {
@@ -151,12 +204,12 @@
 
 .pagination__link,
 .pagination__current {
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1.4rem;
   border-radius: 40px;
   border: 1px solid rgba(0,0,0,0.12);
   text-decoration: none;
   font-size: 14px;
-  transition: all 0.25s ease;
+  transition: all .3s ease;
 }
 
 .pagination__link {
@@ -165,7 +218,7 @@
 }
 
 .pagination__link:hover {
-  background: #f2eee9;
+  background: #f3eee8;
   border-color: #000;
 }
 
@@ -176,7 +229,7 @@
 }
 
 /* ================================
-   MOBILE IMPROVEMENT
+   MOBILE
 ================================ */
 
 @media (max-width: 768px) {
@@ -187,12 +240,17 @@
 
   .products__grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.2rem;
+    gap: 1.3rem;
   }
 
   .products__grid > * {
-    padding: 0.8rem;
-    border-radius: 14px;
+    padding: 0.9rem;
+    border-radius: 16px;
+  }
+
+  /* Disable hover overlay on touch */
+  .products__grid > *::after {
+    display: none;
   }
 
 }
