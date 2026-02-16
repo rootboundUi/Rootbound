@@ -154,11 +154,9 @@ document.addEventListener("DOMContentLoaded", function() {
 {% endschema %}
 
 <style>
-  /* ============================= */
-/* MODERN SEARCH BAR */
-/* ============================= */
+ /* CLEAN INLINE SEARCH */
 
-.search-bar {
+.inline-search {
   position: absolute;
   top: 100%;
   left: 0;
@@ -169,18 +167,18 @@ document.addEventListener("DOMContentLoaded", function() {
   transform: translateY(-20px);
   opacity: 0;
   pointer-events: none;
-  transition: all .35s ease;
-  z-index: 100;
+  transition: all .3s ease;
+  z-index: 200;
 }
 
-.search-bar.active {
+.inline-search.active {
   transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
 }
 
-.search-bar__inner {
-  max-width: 900px;
+.inline-search-form {
+  max-width: 800px;
   margin: 0 auto;
   padding: 0 1.5rem;
   display: flex;
@@ -188,33 +186,27 @@ document.addEventListener("DOMContentLoaded", function() {
   gap: 1rem;
 }
 
-.search-input {
+.inline-search-input {
   flex: 1;
   padding: 0.8rem 1rem;
   border-radius: 40px;
   border: 1px solid rgba(0,0,0,0.15);
   font-size: 14px;
   outline: none;
-  transition: all .25s ease;
+  transition: border .25s ease;
 }
 
-.search-input:focus {
+.inline-search-input:focus {
   border-color: #c67c4e;
-  box-shadow: 0 0 0 2px rgba(198,124,78,0.1);
 }
 
-.search-close {
+.inline-search-close {
   background: none;
   border: none;
   font-size: 18px;
   cursor: pointer;
-  color: #111;
-  transition: color .2s ease;
 }
 
-.search-close:hover {
-  color: #c67c4e;
-}
 
 /* ============================= */
 /* HEADER BASE */
