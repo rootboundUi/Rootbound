@@ -1,17 +1,39 @@
-<section class="hero">
-  <div class="hero__content" style="background-image: url('{{ section.settings.image | image_url: width: 1920 }}');">
-    <div class="hero__overlay"></div>
-    <div class="hero__text">
-      <h1 class="hero__title">{{ section.settings.title }}</h1>
-      <p class="hero__subtitle">{{ section.settings.subtitle }}</p>
+<section class="lux-hero">
+  <div class="lux-hero__media">
+    {% if section.settings.image != blank %}
+      <img
+        src="{{ section.settings.image | image_url: width: 2400 }}"
+        srcset="
+          {{ section.settings.image | image_url: width: 768 }} 768w,
+          {{ section.settings.image | image_url: width: 1200 }} 1200w,
+          {{ section.settings.image | image_url: width: 1800 }} 1800w,
+          {{ section.settings.image | image_url: width: 2400 }} 2400w
+        "
+        sizes="100vw"
+        alt="{{ section.settings.title | escape }}"
+        class="lux-hero__image"
+        loading="lazy"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+      >
+    {% endif %}
+    <div class="lux-hero__overlay"></div>
+  </div>
+
+  <div class="lux-hero__content lux-align-{{ section.settings.text_alignment }}">
+    <div class="lux-hero__inner">
+      <h1 class="lux-hero__title">{{ section.settings.title }}</h1>
+      <p class="lux-hero__subtitle">{{ section.settings.subtitle }}</p>
+
       {% if section.settings.cta_text != blank %}
-        <a href="{{ section.settings.cta_link }}" class="button button--primary">
+        <a href="{{ section.settings.cta_link }}" class="lux-button">
           {{ section.settings.cta_text }}
         </a>
       {% endif %}
     </div>
   </div>
 </section>
+
 
 {% schema %}
 {
