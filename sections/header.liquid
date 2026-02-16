@@ -88,42 +88,52 @@
 document.addEventListener("DOMContentLoaded", function() {
 
   const trigger = document.querySelector(".search-trigger");
-
-  // Disable Shopify predictive search overlay if exists
-  const predictive = document.querySelector("predictive-search");
-  if (predictive) {
-    predictive.remove();
-  }
-
-  // Remove any existing search overlays
-  const overlays = document.querySelectorAll(".search-modal, .predictive-search, .modal");
-  overlays.forEach(el => el.remove());
-
-  // Create clean inline search
   const header = document.querySelector(".header");
 
-  const searchBar = document.createElement("div");
-  searchBar.className = "inline-search";
-  searchBar.innerHTML = `
-    <form action="/search" method="get" class="inline-search-form">
-      <input type="search" name="q" placeholder="Search products..." class="inline-search-input" autocomplete="off">
-      <button type="button" class="inline-search-close">✕</button>
-    </form>
-  `;
+  if (!trigger) return;
 
-  header.appendChild(searchBar);
+  /* Remove Shopify predictive search elements */
+  const predictive = document.querySelector("predictive-search");
+  if (predictive) predictive.remove();
+
+  const modal = document.querySelector(".search-modal");
+  if (modal) modal.remove();
+
+  /* Create inline search only once */
+  let searchBar = document.querySelector(".inline-search");
+
+  if (!searchBar) {
+    searchBar = document.createElement("div");
+    searchBar.className = "inline-search";
+    searchBar.innerHTML = `
+      <form action="/search" method="get" class="inline-search-form">
+        <input type="search" name="q" placeholder="Search products..." class="inline-search-input" autocomplete="off">
+        <button type="button" class="inline-search-close">✕</button>
+      </form>
+    `;
+    header.appendChild(searchBar);
+  }
 
   const input = searchBar.querySelector(".inline-search-input");
   const closeBtn = searchBar.querySelector(".inline-search-close");
 
+  /* STOP default behavior */
   trigger.addEventListener("click", function(e) {
     e.preventDefault();
+    e.stopPropagation();
     searchBar.classList.add("active");
     input.focus();
   });
 
   closeBtn.addEventListener("click", function() {
     searchBar.classList.remove("active");
+  });
+
+  /* Close if clicked outside */
+  document.addEventListener("click", function(e) {
+    if (!searchBar.contains(e.target) && !trigger.contains(e.target)) {
+      searchBar.classList.remove("active");
+    }
   });
 
 });
