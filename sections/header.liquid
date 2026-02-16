@@ -1,6 +1,5 @@
 <header class="header" role="banner">
   <div class="header__container">
-
     <!-- Logo -->
     <div class="header__logo">
       {% if section.settings.logo %}
@@ -9,6 +8,7 @@
             src="{{ section.settings.logo | image_url: width: 200 }}" 
             alt="{{ shop.name }}"
             width="{{ section.settings.logo_width }}"
+            height="auto"
             class="logo-image"
           >
         </a>
@@ -36,8 +36,7 @@
 
     <!-- Right Actions -->
     <div class="header__actions">
-
-      <!-- Search Trigger -->
+      <!-- Search -->
       <button class="header__icon-button search-trigger" aria-label="Search">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="11" cy="11" r="8"></circle>
@@ -48,8 +47,8 @@
       <!-- Account -->
       <a href="{{ routes.account_url }}" class="header__icon-button" aria-label="Account">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
           <circle cx="12" cy="7" r="4"></circle>
-          <path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path>
         </svg>
       </a>
 
@@ -63,82 +62,28 @@
         <span class="cart-count" data-cart-count="0">0</span>
       </a>
 
-    </div>
-  </div>
-
-  <!-- Modern Search Bar -->
-  <div class="search-bar">
-    <div class="search-bar__inner">
-      <form action="{{ routes.search_url }}" method="get" role="search">
-        <input type="search" 
-               name="q" 
-               placeholder="Search products..." 
-               class="search-input"
-               autocomplete="off">
-      </form>
-
-      <button class="search-close" aria-label="Close">
-        ✕
+      <!-- Mobile Menu Toggle -->
+      <button class="header__menu-toggle mobile-only" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
     </div>
   </div>
 
+  <!-- Mobile Menu -->
+  <nav class="mobile-menu hidden" role="navigation">
+    {% if settings.menu_main != blank %}
+      <ul class="mobile-menu__list">
+        {% for link in linklists[settings.menu_main].links %}
+          <li class="mobile-menu__item">
+            <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </nav>
 </header>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-
-  const trigger = document.querySelector(".search-trigger");
-  const header = document.querySelector(".header");
-
-  if (!trigger) return;
-
-  /* Remove Shopify predictive search elements */
-  const predictive = document.querySelector("predictive-search");
-  if (predictive) predictive.remove();
-
-  const modal = document.querySelector(".search-modal");
-  if (modal) modal.remove();
-
-  /* Create inline search only once */
-  let searchBar = document.querySelector(".inline-search");
-
-  if (!searchBar) {
-    searchBar = document.createElement("div");
-    searchBar.className = "inline-search";
-    searchBar.innerHTML = `
-      <form action="/search" method="get" class="inline-search-form">
-        <input type="search" name="q" placeholder="Search products..." class="inline-search-input" autocomplete="off">
-        <button type="button" class="inline-search-close">✕</button>
-      </form>
-    `;
-    header.appendChild(searchBar);
-  }
-
-  const input = searchBar.querySelector(".inline-search-input");
-  const closeBtn = searchBar.querySelector(".inline-search-close");
-
-  /* STOP default behavior */
-  trigger.addEventListener("click", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    searchBar.classList.add("active");
-    input.focus();
-  });
-
-  closeBtn.addEventListener("click", function() {
-    searchBar.classList.remove("active");
-  });
-
-  /* Close if clicked outside */
-  document.addEventListener("click", function(e) {
-    if (!searchBar.contains(e.target) && !trigger.contains(e.target)) {
-      searchBar.classList.remove("active");
-    }
-  });
-
-});
-</script>
-
 
 {% schema %}
 {
@@ -164,60 +109,6 @@ document.addEventListener("DOMContentLoaded", function() {
 {% endschema %}
 
 <style>
- /* CLEAN INLINE SEARCH */
-
-.inline-search {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: #ffffff;
-  border-top: 1px solid rgba(0,0,0,0.05);
-  padding: 1rem 0;
-  transform: translateY(-20px);
-  opacity: 0;
-  pointer-events: none;
-  transition: all .3s ease;
-  z-index: 200;
-}
-
-.inline-search.active {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.inline-search-form {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.inline-search-input {
-  flex: 1;
-  padding: 0.8rem 1rem;
-  border-radius: 40px;
-  border: 1px solid rgba(0,0,0,0.15);
-  font-size: 14px;
-  outline: none;
-  transition: border .25s ease;
-}
-
-.inline-search-input:focus {
-  border-color: #c67c4e;
-}
-
-.inline-search-close {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-
 /* ============================= */
 /* HEADER BASE */
 /* ============================= */
