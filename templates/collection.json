@@ -23,7 +23,7 @@
     "products": {
       "type": "collection-products",
       "settings": {
-        "products_per_page": 12
+        "products_per_page": 18
       }
     }
   },
