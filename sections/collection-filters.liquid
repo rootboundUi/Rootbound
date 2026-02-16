@@ -367,5 +367,85 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
 }
+/* ============================
+   PREMIUM PRICE RANGE SLIDER
+============================ */
+
+.price-slider {
+  position: relative;
+  width: 100%;
+  padding: 20px 0 10px;
+}
+
+/* Track background */
+.slider-track {
+  position: absolute;
+  height: 4px;
+  width: 100%;
+  background: #e8e4df;
+  border-radius: 4px;
+  top: 26px;
+}
+
+/* Range Inputs */
+.range-input {
+  position: absolute;
+  width: 100%;
+  top: 20px;
+  appearance: none;
+  background: none;
+  pointer-events: none;
+}
+
+/* Thumb */
+.range-input::-webkit-slider-thumb {
+  appearance: none;
+  height: 18px;
+  width: 18px;
+  background: #000;
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform .2s ease;
+}
+
+.range-input::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+.range-input::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  background: #000;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Remove default track */
+.range-input::-webkit-slider-runnable-track {
+  background: transparent;
+}
+
+.range-input::-moz-range-track {
+  background: transparent;
+}
+
+/* Price values */
+.price-values {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  font-size: 13px;
+  color: #444;
+}
+
+/* Apply button */
+.price-slider .apply-btn {
+  margin-top: 12px;
+  width: 100%;
+  border-radius: 30px;
+  padding: 10px;
+}
+
 
 </style>
