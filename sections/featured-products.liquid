@@ -121,4 +121,106 @@
     font-size: 1.5rem;
   }
 }
+//CSS//
+
+.featured-products {
+  padding: 8rem 3rem;
+  background: #F4F4F2; /* Same editorial tone as footer */
+}
+
+/* Container */
+.featured-products__container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* Header */
+.featured-products__header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+/* Title */
+.featured-products__title {
+  font-size: 3rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0 0 1rem 0;
+  color: #111;
+}
+
+/* Subtitle */
+.featured-products__subtitle {
+  font-size: 1rem;
+  color: #666;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+/* Grid */
+.featured-products__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+/* Add smooth animation to product cards */
+.featured-products__grid .product-card {
+  transition: all 0.4s ease;
+}
+
+.featured-products__grid .product-card:hover {
+  transform: translateY(-8px);
+}
+
+/* Image hover zoom (if image wrapper exists inside product-card) */
+.product-card img {
+  transition: transform 0.6s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Footer Button */
+.featured-products__footer {
+  text-align: center;
+}
+
+/* Luxury Button Style */
+.button--primary {
+  background: transparent;
+  border: 1px solid #111;
+  padding: 14px 40px;
+  font-size: 13px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #111;
+  transition: all 0.4s ease;
+}
+
+.button--primary:hover {
+  background: #111;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+
+  .featured-products {
+    padding: 5rem 1.5rem;
+  }
+
+  .featured-products__title {
+    font-size: 2rem;
+  }
+
+  .featured-products__grid {
+    gap: 2rem;
+  }
+}
+
 </style>
