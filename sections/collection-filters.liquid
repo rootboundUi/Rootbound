@@ -80,90 +80,90 @@
 {% endschema %}
 
 <style>
-/* ================================= */
-/* MINIMAL LUXURY COLLECTION FILTERS */
-/* ================================= */
+/* =============================== */
+/* PREMIUM TOP FILTER BAR */
+/* =============================== */
 
 .collection-filters {
-  padding: 4rem 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
 }
 
-/* Layout */
 .filters__container {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 /* ================= */
-/* SIDEBAR */
+/* FILTER ROW */
 /* ================= */
 
 .filters__sidebar {
-  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  flex-wrap: wrap;
   padding: 0;
-  border-right: 1px solid rgba(0,0,0,0.08);
+  background: transparent;
+  border: none;
 }
 
-/* Filter Groups */
+/* Each filter group inline */
 .filter-group {
-  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 0;
 }
 
+/* Title */
 .filter-title {
   font-size: 11px;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
+  margin: 0;
   color: #111;
 }
 
-/* Price */
+/* Price Inline */
 .price-range {
   display: flex;
-  gap: 1rem;
   align-items: center;
+  gap: 0.8rem;
 }
 
 .price-input {
-  flex: 1;
+  width: 80px;
   border: none;
   border-bottom: 1px solid rgba(0,0,0,0.2);
-  padding: 0.6rem 0;
+  padding: 0.4rem 0;
   background: transparent;
-  font-size: 14px;
+  font-size: 13px;
   outline: none;
-  transition: border 0.3s ease;
 }
 
 .price-input:focus {
   border-bottom: 1px solid #000;
 }
 
-/* Checkbox Filters */
+/* Availability inline */
 .filter-options {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
 }
 
 .filter-label {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-size: 14px;
+  gap: 0.4rem;
+  font-size: 13px;
   color: #333;
   cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-
-.filter-label:hover {
-  opacity: 0.6;
 }
 
 .filter-label input {
@@ -172,13 +172,12 @@
   height: 14px;
 }
 
-/* Apply Button */
+/* Apply Button Small */
 .button--primary {
-  margin-top: 2rem;
   background: #111;
   color: #fff;
-  padding: 0.8rem 1.6rem;
-  font-size: 12px;
+  padding: 0.6rem 1.2rem;
+  font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
   border: none;
@@ -191,61 +190,43 @@
 }
 
 /* ================= */
-/* HEADER (RESULTS + SORT) */
+/* RESULTS + SORT */
 /* ================= */
 
-.filters__header {
+.filters__main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3rem;
 }
 
 .results-count {
-  font-size: 14px;
+  font-size: 13px;
   color: #555;
-  letter-spacing: 0.5px;
 }
 
-/* Sort dropdown minimal */
 #sort-select {
   border: none;
   border-bottom: 1px solid rgba(0,0,0,0.3);
   background: transparent;
-  padding: 0.6rem 0;
-  font-size: 14px;
+  padding: 0.4rem 0;
+  font-size: 13px;
   cursor: pointer;
   outline: none;
 }
 
-/* ================================= */
-/* MOBILE OPTIMIZATION */
-/* ================================= */
+/* ================= */
+/* MOBILE */
+/* ================= */
 
 @media (max-width: 768px) {
 
-  .collection-filters {
-    padding: 2rem 1.5rem;
-  }
-
-  .filters__container {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  /* Sidebar becomes top filter row */
   .filters__sidebar {
-    border-right: none;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    padding-bottom: 2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
   }
 
-  .filter-group {
-    margin-bottom: 2rem;
-  }
-
-  /* Better stacked layout */
-  .filters__header {
+  .filters__main {
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
@@ -253,11 +234,6 @@
 
   #sort-select {
     width: 100%;
-  }
-
-  .button--primary {
-    width: 100%;
-    text-align: center;
   }
 }
 
